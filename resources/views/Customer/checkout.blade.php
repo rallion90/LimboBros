@@ -1,0 +1,119 @@
+@extends('layouts.customer_layout')
+@section('content')
+<?php $Helper = new \Helper; ?>
+<!--================Checkout Area =================-->
+<section class="checkout_area section-margin--small">
+    <div class="container">
+        
+        <!--<div class="cupon_area">
+            <div class="check_title">
+                <h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
+            </div>
+            <input type="text" placeholder="Enter coupon code">
+            <a class="button button-coupon" href="#">Apply Coupon</a>
+        </div>-->
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <form class="row contact_form" id="checkout_form" action="#" method="post" novalidate="novalidate">
+                        @csrf
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="first" name="firstname" placeholder="Firstname">
+                            <span class="placeholder" data-placeholder="First name"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="last" name="lastname" placeholder="Lastname">
+                            <span class="placeholder" data-placeholder="Last name"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="number" name="email" placeholder="Email">
+                            <span class="placeholder" data-placeholder="Phone number"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="email" name="zipcode" placeholder="Zip Code">
+                            <span class="placeholder" data-placeholder="Email Address"></span>
+                        </div>
+
+                        
+                        <div class="col-md-12 form-group p_star">
+                            <select name="province" class="country_select province" data-dependent="municipality">
+                                <option value="null">Province</option>
+                            
+                                <option value=""></option>
+                            
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group p_star" data-dependent="barangay">
+                            <select class="country_select" name="municipality">
+                                <option value="1">Municipality</option>
+                                <option value="2">Country</option>
+                                <option value="4">Country</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <select class="country_select" name="barangay">
+                                <option value="1">Barangay</option>
+                                <option value="2">Country</option>
+                                <option value="4">Country</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="street" name="street" placeholder="Street Address">
+                            <span class="placeholder" data-placeholder="Address line 01"></span>
+                        </div>
+
+                        <!--hidden orders-->
+                       
+                        
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
+                        @foreach(Cart::getContent() as $cart)    
+                            <li><a href="#">{{ ucwords($cart->name) }} <span class="middle">x {{ $cart->quantity }}</span> <span class="last">₱{{ number_format($cart->price) }}.00</span></a></li>
+                        @endforeach    
+                           
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a href="#">Subtotal <span>₱{{ number_format(Cart::getSubTotal()) }}.00</span></a></li>
+                            <li><a href="#">Shipping <span style="color:red">Outside Quezon Distric 1 and 2 will be deducted 150 pesos for shipping fee</span></a></li>
+                            <li><a href="#">Total <span>₱{{ number_format(Cart::getTotal()) }}.00</span></a></li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" class="payment_option" id="f-option5" name="selector">
+                                <label for="f-option5">Cash on Delivery</label>
+                                <div class="check"></div>
+                            </div>
+                            <p>Buy via Cash on Delivery. *Important Note Cash on delivery dont get any of your important details like credit card.</p>
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" class="payment_option" id="f-option6" name="selector" value="2">
+                                <label for="f-option6">Paypal </label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+                            <p>Pay via PayPal; you can pay with your paypal account if you don’t want to buy on door to door.</p>
+                        </div>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4">
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                        <div class="text-center">
+                            <button class="button button-paypal" onclick="checkout()" id="checkout">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+@endsection
