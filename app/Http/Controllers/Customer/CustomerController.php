@@ -14,6 +14,8 @@ use Auth;
 
 use Cart;
 
+use App\Order;
+
 class CustomerController extends Controller
 {
     //
@@ -47,14 +49,57 @@ class CustomerController extends Controller
     }
 
     public function checkout(){
+        if(Cart::isEmpty()){
+            return redirect()->route('customer.index');
+        }
+
         return view('Customer.checkout');
     }
 
     public function cod(Request $request){
+        $order = new Order;
+
+        $request->validate([
+            'firstname' => 'required|max:60',
+            'lastname' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'zipcode' => 'required',
+            'province' => 'required|not_in:0',
+            'municipality' => 'required|not_in:0',
+            'barangay' => 'required|not_in:0',
+            'street' => 'required',
+        ]);
+
         $six_digit_random_number = mt_rand(100000000, 999999999);
-        echo $six_digit_random_number;
+        
+        foreach(Cart::getContent() as $cart){
+            $data = array(
+                'product_name' => $cart->name,
+                'product_price' => $cart->price,
+                'product_quantity' => $cart->quantity,
+                'customer' => $request->firstname." ".$request->lastname,
+                'contact_number' => $request->phone,
+                'zipcode' => $request->zipcode,
+                'email' => $request->email,
+                'province' => $request->province,
+                'municipality' => $request->municipality,
+                'barangay' => $request->barangay,
+                'street' => $request->street,
+                'order_number' => $six_digit_random_number,
+                'order_type' => 1,
+                'order_status' => 0,
+            );
 
+            $insert = $order::insert($data);
 
+            if($insert){
+                Cart::clear();
+                Cart::session()->clear();
+
+                return back();
+            }
+        }
         //ilalagay sa foreach ang insertion ng data         
     }
 

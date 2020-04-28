@@ -10,6 +10,8 @@ use App\Product;
 
 use App\Category;
 
+use App\Order;
+
 class AdminController extends Controller
 {
     //
@@ -32,7 +34,9 @@ class AdminController extends Controller
     }
 
     public function cash_on_delivery(){
-        return view('Admin.cod');
+        $order = new Order;
+        $get_cod = $order::where('order_type', '=', 1)->where('order_status', '=', 0)->where('tag_deleted', '=', 0)->get();
+        return view('Admin.cod', compact('get_cod'));
     }
 
     public function add_product(Request $request){

@@ -38,18 +38,20 @@
 							</tr>
 						</thead>
 						<tbody>
+						@foreach($get_cod as $cod)	
 							<tr>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->product_name) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->product_quantity) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->customer) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->contact_number) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->email) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->province) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->municipality) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->barangay) }}</td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->street) }}</td>
 								<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></td>
 							</tr>
+						@endforeach	
 						</tbody>
 					</table>
 				</div>

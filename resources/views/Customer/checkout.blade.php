@@ -16,52 +16,87 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
-                    <form class="row contact_form" id="checkout_form" action="#" method="post" novalidate="novalidate">
+                    <form class="row contact_form" name="checkoutForm" id="checkout_form" action="#" method="post" novalidate="novalidate">
                         @csrf
+                        
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="first" name="firstname" placeholder="Firstname">
                             <span class="placeholder" data-placeholder="First name"></span>
+                            @error('firstname')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="last" name="lastname" placeholder="Lastname">
                             <span class="placeholder" data-placeholder="Last name"></span>
+                            @error('lastname')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
-                        <div class="col-md-6 form-group p_star">
+                        <div class="col-md-4 form-group p_star">
                             <input type="text" class="form-control" id="number" name="email" placeholder="Email">
                             <span class="placeholder" data-placeholder="Phone number"></span>
+                            @error('email')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
-                        <div class="col-md-6 form-group p_star">
+                        <div class="col-md-4 form-group p_star">
+                            <input type="text" class="form-control" id="number" name="phone" placeholder="Phone Number ex. 09">
+                            <span class="placeholder" data-placeholder="Phone number"></span>
+                            @error('phone')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
+                        </div>
+                        <div class="col-md-4 form-group p_star">
                             <input type="text" class="form-control" id="email" name="zipcode" placeholder="Zip Code">
                             <span class="placeholder" data-placeholder="Email Address"></span>
+                            @error('zipcode')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
 
                         
                         <div class="col-md-12 form-group p_star">
                             <select name="province" class="country_select province" data-dependent="municipality">
-                                <option value="null">Province</option>
-                            
-                                <option value=""></option>
+                                <option value="0">Choose Province</option>
+                                <option value="1">Municipality</option>
+                                <option value="2">Country</option>
+                                <option value="4">Country</option>
                             
                             </select>
+                            @error('province')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
                         <div class="col-md-12 form-group p_star" data-dependent="barangay">
                             <select class="country_select" name="municipality">
+                                <option value="0">Choose Municipality</option>
                                 <option value="1">Municipality</option>
                                 <option value="2">Country</option>
                                 <option value="4">Country</option>
                             </select>
+                            @error('municipality')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
                         <div class="col-md-12 form-group p_star">
                             <select class="country_select" name="barangay">
+                                <option value="0">Choose Barangay</option>
                                 <option value="1">Barangay</option>
                                 <option value="2">Country</option>
                                 <option value="4">Country</option>
                             </select>
+                            @error('barangay')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
 
                         <div class="col-md-12 form-group p_star">
                             <input type="text" class="form-control" id="street" name="street" placeholder="Street Address">
                             <span class="placeholder" data-placeholder="Address line 01"></span>
+                            @error('street')
+                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
+                            @enderror
                         </div>
 
                         <!--hidden orders-->

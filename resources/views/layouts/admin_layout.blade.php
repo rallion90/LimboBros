@@ -99,6 +99,12 @@
                             <li>
                                 <a href="/admin/cash_on_delivery"><i class="fa fa-money fa-fw"></i> Cash on Delivery</a>
                             </li>
+                            <li>
+                                <a href="#"><i class="fa fa-paypal fa-fw"></i> Paypal</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-success fa-fw"></i> Succesful Orders</a>
+                            </li>
                             
                             
                             <li>

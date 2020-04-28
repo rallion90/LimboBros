@@ -19,6 +19,7 @@
 
 
   <link rel="stylesheet" href="{{ asset('customer_vendor/css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   <style>
@@ -197,6 +198,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="{{ asset('customer_vendor/mail-script.js') }}"></script>
   <script src="{{ asset('customer_vendor/js/main.js') }}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
 
 </body>
@@ -208,8 +210,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     if(terms){
       if(document.getElementById('f-option5').checked) {
+        //validation
+
         document.getElementById("checkout_form").action = "{{ route('customer.cod') }}";
         document.getElementById("checkout_form").submit();
+
       }else if(document.getElementById('f-option6').checked) {
         document.getElementById("checkout_form").action = "#paypal_route";
         document.getElementById("checkout_form").submit();
