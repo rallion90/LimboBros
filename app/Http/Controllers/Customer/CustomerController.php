@@ -16,6 +16,10 @@ use Cart;
 
 use App\Order;
 
+use Mail;
+
+use App\Mail\OrderMail;
+
 class CustomerController extends Controller
 {
     //
@@ -94,10 +98,20 @@ class CustomerController extends Controller
             $insert = $order::insert($data);
 
             if($insert){
-                Cart::clear();
+                /*Cart::clear();
                 Cart::session()->clear();
 
-                return back();
+                return back();*/
+
+                $confirmationEmail = Mail::to($request->email)->send(new OrderMail($data));
+
+                if($confirmationEmail){
+                    Cart::clear();
+                    Cart::session()->clear();
+                    return back();
+                }
+
+                
             }
         }
         //ilalagay sa foreach ang insertion ng data         
