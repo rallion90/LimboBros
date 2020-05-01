@@ -12,6 +12,12 @@ use App\Category;
 
 use App\Order;
 
+use DB;
+
+use Mail;
+
+use App\Mail\OrderMail;
+
 class AdminController extends Controller
 {
     //
@@ -35,7 +41,15 @@ class AdminController extends Controller
 
     public function cash_on_delivery(){
         $order = new Order;
-        $get_cod = $order::where('order_type', '=', 1)->where('order_status', '=', 0)->where('tag_deleted', '=', 0)->get();
+        //$get_cod = $order::where('order_type', '=', 1)->where('order_status', '=', 0)->where('tag_deleted', '=', 0)->get();
+        $get_cod = DB::table('orders')
+                 ->select('order_number')
+                 ->where('tag_deleted', '=', 0)
+                 ->where('order_status', '=', 0)
+                 ->groupBy('order_number')
+                 ->get();
+        
+
         return view('Admin.cod', compact('get_cod'));
     }
 
@@ -147,4 +161,53 @@ class AdminController extends Controller
             return back()->with('success', 'Category Added Succesfully');
         }
     }
+
+    public function succesful(){
+        return view('Admin.successful_order');
+    }
+
+    public function details($id){
+        $order = new Order;
+        $get_order = $order::where('order_number', '=', $id)->get();
+        $get_info = $order::where('order_number', '=', $id)->limit(1)->first();
+        $sum = 0;
+
+
+        foreach($get_order as $order_total){
+            $sum += ($order_total->product_quantity * $order_total->product_price);
+        }
+
+        return view('Admin.order')->with('get_order', $get_order)->with('id', $id)->with('get_info', $get_info)->with('sum', $sum);
+    }
+
+    public function confirm_order($id){
+        $order = new Order;
+        $update = $order::where('order_number', '=', $id)->update([
+            'order_status' => 1
+        ]);
+
+        if($update){
+            $get_order2 = $order::where('order_number', '=', $id)->get();
+
+            $total = 0;
+            $email = "";
+            $order_number = "";
+            foreach($get_order2 as $order_total){
+                $total += ($order_total->product_quantity * $order_total->product_price);
+                $email = $order_total->email;
+                $order_number = $order_total->order_number;
+            }
+
+            Mail::to($email)->send(new OrderMail($get_order2, $total, $order_number));
+
+            
+            return redirect()->route('admin.cod')->with('success', 'Order Succesfully Confirmed');
+            
+
+            
+        }
+    }
+
+    
+
 }

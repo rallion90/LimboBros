@@ -24,15 +24,8 @@
 					<table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
 						<thead>
 							<tr>
-								<th width="8%">Product Name</th>
-								<th width="10%">Product Quantity</th>
-								<th width="10%">Customer Name</th>
-								<th width="10%">Contact Number</th>
-								<th width="10%">Email</th>
-								<th width="10%">Province</th>
-								<th width="10%">Municipality</th>
-								<th width="10%">Barangay</th>
-								<th width="10%">Street</th>
+								<th width="8%">Order Number</th>
+								
 								<th width="10%">Action</th>
 
 							</tr>
@@ -40,16 +33,9 @@
 						<tbody>
 						@foreach($get_cod as $cod)	
 							<tr>
-								<td style="vertical-align: middle;">{{ ucwords($cod->product_name) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->product_quantity) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->customer) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->contact_number) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->email) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->province) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->municipality) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->barangay) }}</td>
-								<td style="vertical-align: middle;">{{ ucwords($cod->street) }}</td>
-								<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></td>
+								<td style="vertical-align: middle;">{{ ucwords($cod->order_number) }}</td>
+								
+								<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="/admin/order_details/{{ $cod->order_number }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
 							</tr>
 						@endforeach	
 						</tbody>

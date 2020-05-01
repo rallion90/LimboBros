@@ -11,17 +11,21 @@ class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $get_order2;
+    public $total;
+    public $order_number;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($get_order2, $total, $order_number)
     {
         //
-        $this->data = $data;
+        $this->get_order2 = $get_order2;
+        $this->total = $total;
+        $this->order_number = $order_number;
     }
 
     /**
@@ -31,6 +35,6 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.order')->with(['data' => $this->data]);
+        return $this->view('email.order')->with(['data' => $this->get_order2, 'total' => $this->total, 'order_number' => $this->order_number]);
     }
 }

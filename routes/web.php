@@ -54,6 +54,9 @@ Route::prefix('admin')->group(function(){
 		Route::post('edit_product_trigger', 'Admin\AdminController@productTrigger')->name('admin.editProductTrigger');
 		Route::post('add_stock_trigger/{id}', 'Admin\AdminController@addStockTrigger')->name('admin.addStockTrigger');
 		Route::post('add_category', 'Admin\AdminController@addCategory')->name('admin.addCategory');
+		Route::get('succesful_order', 'Admin\AdminController@succesful')->name('admin.success');
+		Route::get('order_details/{id}', 'Admin\AdminController@details');
+		Route::get('confirm_order/{id}', 'Admin\AdminController@confirm_order');
 	});	
 });
 

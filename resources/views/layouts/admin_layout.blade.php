@@ -22,6 +22,7 @@
         <link href="{{ asset('admin_vendor/css/morris.css') }}" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="{{ asset('admin_vendor/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('admin_vendor/css/summary.css') }}" rel="stylesheet" type="text/css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -103,7 +104,7 @@
                                 <a href="#"><i class="fa fa-paypal fa-fw"></i> Paypal</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-success fa-fw"></i> Succesful Orders</a>
+                                <a href="/admin/succesful_order"><i class="fa fa-success fa-fw"></i> Succesful Orders</a>
                             </li>
                             
                             

@@ -103,13 +103,13 @@ class CustomerController extends Controller
 
                 return back();*/
 
-                $confirmationEmail = Mail::to($request->email)->send(new OrderMail($data));
+                //$confirmationEmail = Mail::to($request->email)->send(new OrderMail($data));
 
-                if($confirmationEmail){
-                    Cart::clear();
-                    Cart::session()->clear();
-                    return back();
-                }
+                Cart::clear();
+                Cart::session()->clear();
+                return redirect()->route('customer.index')->with('message', 'Your Order has been Received. Please check your Email for the Confirmation');
+
+                
 
                 
             }
