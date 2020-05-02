@@ -204,6 +204,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 </html>
 
+@if(Session::has('orderSuccess'))
+  <script>
+    swal({
+        text: "{!! Session::get('orderSuccess') !!}",
+        title: "Order Success",
+        icon: "success",
+        showCloseButton: true,
+
+        // more options
+    });
+  </script>
+@elseif(Session::has('addSuccess')) 
+  <script>
+    swal("Item Added", "{!! Session::get('addSuccess') !!}", "success", {
+      buttons: ['Add more Item?', 'Proceed to Checkout'],
+    }).then(function(){
+      window.location.href="{{ route('customer.checkout') }}";
+    });
+  </script>   
+@endif
+
 <script type="text/javascript">
   function checkout(){
     var terms = document.getElementById("f-option4").checked;

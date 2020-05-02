@@ -18,6 +18,12 @@ use App\Order;
 
 use Mail;
 
+use Alert;
+
+//use SweetAlert;
+
+use App\Providers\SweetAlertServiceProvider;
+
 use App\Mail\OrderMail;
 
 class CustomerController extends Controller
@@ -79,6 +85,8 @@ class CustomerController extends Controller
         
         foreach(Cart::getContent() as $cart){
             $data = array(
+                'user_id' => Auth::guard('customer')->user()->customer_id,
+                'product_id' => $cart->id,
                 'product_name' => $cart->name,
                 'product_price' => $cart->price,
                 'product_quantity' => $cart->quantity,
@@ -97,23 +105,20 @@ class CustomerController extends Controller
 
             $insert = $order::insert($data);
 
-            if($insert){
-                /*Cart::clear();
-                Cart::session()->clear();
+             
 
-                return back();*/
-
-                //$confirmationEmail = Mail::to($request->email)->send(new OrderMail($data));
+            /*if($insert){
+               
 
                 Cart::clear();
                 Cart::session()->clear();
-                return redirect()->route('customer.index')->with('message', 'Your Order has been Received. Please check your Email for the Confirmation');
-
-                
-
-                
-            }
+                return redirect()->route('customer.index')->with('message', 'Your Order has been Received. Please check your Email for the Confirmation'); 
+            }*/
         }
+
+        Cart::clear();   
+
+        return redirect()->route('customer.index')->with('orderSuccess', 'Your Order has been Recieved. Please wait for the sellers confirmation');
         //ilalagay sa foreach ang insertion ng data         
     }
 

@@ -192,13 +192,15 @@ class AdminController extends Controller
             $total = 0;
             $email = "";
             $order_number = "";
+            $customer_name = "";
             foreach($get_order2 as $order_total){
                 $total += ($order_total->product_quantity * $order_total->product_price);
                 $email = $order_total->email;
                 $order_number = $order_total->order_number;
+                $customer_name = $order_total->customer;
             }
 
-            Mail::to($email)->send(new OrderMail($get_order2, $total, $order_number));
+            Mail::to($email)->send(new OrderMail($get_order2, $total, $order_number, $customer_name));
 
             
             return redirect()->route('admin.cod')->with('success', 'Order Succesfully Confirmed');
