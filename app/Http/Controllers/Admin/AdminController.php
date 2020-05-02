@@ -47,6 +47,7 @@ class AdminController extends Controller
                  ->where('tag_deleted', '=', 0)
                  ->where('order_status', '=', 0)
                  ->groupBy('order_number')
+                 ->orderBy('created_at')
                  ->get();
         
 

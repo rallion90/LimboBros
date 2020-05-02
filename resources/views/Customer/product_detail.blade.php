@@ -42,11 +42,9 @@
 
 						<div class="product_count">
 							<label for="qty">Quantity:</label>
-							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-							class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-							<input type="text" name="product_quantity" id="product_quantity" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-							class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
+							
+							<input type="number" name="product_quantity" id="product_quantity" size="2" min="1" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+							
 
 							<button class="btn btn-primary" id="addCart">Add to Cart</button>
 						</div>

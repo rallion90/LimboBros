@@ -31,6 +31,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Total</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody> 
@@ -62,25 +63,32 @@
                       class="reduced input-number-decrement items-count" type="button">
                       <i class="ti-angle-down"></i>
                     </button> -->
-                    <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                    <input class="input-number" type="text" value="{{ $content->quantity }}" min="0" max="10">
-                    <span class="input-number-increment"> <i class="ti-plus"></i></span>
+                    
+                    <input type="number" id="quantity" value="{{ $content->quantity }}">
+                    
                   </div>
                 </td>
                 <td>
                   <h5>₱{{ number_format($content->price * $content->quantity) }}.00</h5>
                 </td>
+                <td>
+                  <td>
+                    <a href="#" onclick="update('{{ $content->id }}')" class="btn_1" >Update</a>  <a href="#" onclick="remove('{{ $content->id }}')" class="btn_1" >Remove</a>
+                  </td>
+                </td>
               </tr>
             @endforeach
               <tr class="bottom_button">
                 <td>
-                  <a class="btn_1" href="#">Update Cart</a>
+                  
                 </td>
                 <td></td>
                 <td></td>
                 <td>
                   
                 </td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td></td>
@@ -91,6 +99,8 @@
                 <td>
                   <h5>₱{{ number_format(Cart::getSubTotal()) }}.00</h5>
                 </td>
+                <td></td>
+                <td></td>
               </tr>
               <tr class="shipping_area">
                 <td></td>
@@ -98,6 +108,9 @@
                 <td>
                   
                 </td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
            
             </tbody>

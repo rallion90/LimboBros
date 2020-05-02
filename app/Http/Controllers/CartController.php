@@ -27,4 +27,18 @@ class CartController extends Controller
     	//return $cart_content;
     	return view('Customer.cart', compact('cart_content'));
     }
+
+    public function updateCart(Request $request){
+        Cart::update($request->id, array(
+            'quantity' => $request->quantity
+        ));
+        //return $request->all();
+
+        return response()->json('Your Item Updated Succesfully');
+    }
+
+    public function removeCart($id){
+        Cart::remove($id);
+        return back();
+    }
 }

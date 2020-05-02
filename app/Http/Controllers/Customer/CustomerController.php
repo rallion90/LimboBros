@@ -104,16 +104,6 @@ class CustomerController extends Controller
             );
 
             $insert = $order::insert($data);
-
-             
-
-            /*if($insert){
-               
-
-                Cart::clear();
-                Cart::session()->clear();
-                return redirect()->route('customer.index')->with('message', 'Your Order has been Received. Please check your Email for the Confirmation'); 
-            }*/
         }
 
         Cart::clear();   

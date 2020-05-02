@@ -220,7 +220,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     swal("Item Added", "{!! Session::get('addSuccess') !!}", "success", {
       buttons: ['Add more Item?', 'Proceed to Checkout'],
     }).then(function(){
-      window.location.href="{{ route('customer.checkout') }}";
+      window.location.href="{{ route('customer.cart') }}";
     });
   </script>   
 @endif
@@ -264,6 +264,32 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       icon: "warning",
       title: "Empty Cart!",
     });
+  }
+
+  function update(id){
+    var quantity = $('#quantity').val();
+    $.ajax({
+      type: 'POST',
+      url: '{{ route("customer.updateCart") }}',
+      data: {
+        '_token': '{{ csrf_token() }}',
+        'id': id,
+        'quantity': quantity
+      },
+      success: function(response){
+        location.reload();
+        swal({
+          text: response,
+          title: "Success",
+          icon: "success",
+          showCloseButton: true,
+        });
+      }
+    });
+  }
+
+  function remove(id){
+    window.location.href='/customer/removeCart/'+id;
   }
 
 </script>

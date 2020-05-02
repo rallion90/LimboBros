@@ -27,6 +27,8 @@ Route::prefix('customer')->group(function(){
 	Route::get('products/{id}', 'Customer\CustomerController@product_filter')->name('customer.product_filter');
 	Route::get('product_details/{id}', 'Customer\CustomerController@product_details')->name('customer.product_details');
 	Route::post('addCart', 'CartController@addCart')->name('customer.addCart');
+	Route::post('updateCart', 'CartController@updateCart')->name('customer.updateCart');
+	Route::get('removeCart/{id}', 'CartController@removeCart')->name('customer.removeCart');
 	Route::get('cart', 'CartController@Cart')->name('customer.cart');
 	Route::get('checkout', 'Customer\CustomerController@checkout')->name('customer.checkout');
 	Route::post('cash_on_delivery', 'Customer\CustomerController@cod')->name('customer.cod');
