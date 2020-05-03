@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Manila',
 
     /*
     |--------------------------------------------------------------------------
@@ -231,6 +231,7 @@ return [
         'Helper' => App\Http\Helper::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'Carbon' => 'Carbon\Carbon',
     ],
 
 ];

@@ -18,28 +18,57 @@
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-					<div class="float-left">
-						
-					</div>
-					<table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
-						<thead>
-							<tr>
-								<th width="8%">Order Number</th>
-								
-								<th width="10%">Action</th>
+					<div class="col-md-6">
+						<div class="float-left">
+							
+						</div>
+						<h3><strong>Pending Orders</strong></h3>
+						<table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
+							<thead>
+								<tr>
+									<th width="8%">Order Number</th>
+									
+									<th width="10%">Action</th>
 
-							</tr>
-						</thead>
-						<tbody>
-						@foreach($get_cod as $cod)	
-							<tr>
-								<td style="vertical-align: middle;">{{ ucwords($cod->order_number) }}</td>
-								
-								<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="/admin/order_details/{{ $cod->order_number }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-							</tr>
-						@endforeach	
-						</tbody>
-					</table>
+								</tr>
+							</thead>
+							<tbody>
+							@foreach($get_cod as $cod)	
+								<tr>
+									<td style="vertical-align: middle;">{{ ucwords($cod->order_number) }}</td>
+									
+									<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="/admin/order_details/{{ $cod->order_number }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+								</tr>
+							@endforeach	
+							</tbody>
+						</table>
+					</div>
+
+					<div class="col-md-6">
+						<div class="float-left">
+							
+						</div>
+						<h3><strong>On Delivery</strong></h3>
+						<table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
+							<thead>
+								<tr>
+									<th width="8%">Order Number</th>
+									
+									<th width="10%">Action</th>
+
+								</tr>
+							</thead>
+							<tbody>
+							@foreach($get_deliver as $deliver)	
+								<tr>
+									<td style="vertical-align: middle;">{{ ucwords($deliver->order_number) }}</td>
+									
+									<td style="vertical-align: middle;"><a href="#">Success</a> <a href="#">Cancel</a></td>
+								</tr>
+							@endforeach	
+							</tbody>
+						</table>
+					</div>	
 				</div>
 				<!-- /.panel-body -->
 			</div>

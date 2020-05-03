@@ -20,11 +20,11 @@
 </head>
 	<body>
 		<h4 style="color:red">Hello, {{ $customer_name }}</h4>
-		<br>
+		
 		<p>Your Order at Limbo Bros has been confirm. We Expect to received your item(s) within the next 2 working days.</p>
-		<br>
+		
 		<p>We will update you by your mobile number when your item arrives. You can check your order status anytime online using our Order Tracking Tool. Just click your Account Menu then click Track order and type your email and confirmation Number.</p>
-		<br>
+		
 		<p>Your Order Cofirmation number is: <strong>{{ $order_number }}</strong>. Please keep this number for tracking your orders.</p>
 		<table>
 		  <tr>
@@ -45,7 +45,7 @@
 		</table>
 		<br>
 		<p>Please Click the Link below when you received your item. Thank you for your order.</p>
-		<a href="#">Payment Delivered</a>
+		<a href="http://127.0.0.1:8000/admin/order_recieved/{{ $order_number }}">Payment Delivered</a>
 
 	</body>
 </html>

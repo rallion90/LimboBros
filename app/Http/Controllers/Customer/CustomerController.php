@@ -31,13 +31,13 @@ class CustomerController extends Controller
     //
     public function index(){
         $product = new Product;
-        $active_product = $product::where('tag_deleted', '=', 0)->take(3)->get();
+        $active_product = $product::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(3)->get();
     	return view('Customer.index', compact('active_product'));
     }
 
     public function product_details($id){
         $product = new Product;
-        $get_product = $product::where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
+        $get_product = $product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
         return view('Customer.product_detail', compact('get_product'));
     }
 
@@ -47,7 +47,7 @@ class CustomerController extends Controller
 
     public function products(){
         $products = new Product;
-        $get_product = $products::where('tag_deleted', '=', 0)->get();
+        $get_product = $products::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->get();
     	return view('Customer.product_list', compact('get_product'));
     }
 

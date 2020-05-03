@@ -62,14 +62,16 @@
                             <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
+                        
                             <li>
                                 <a href="#">
                                     <div>
-                                        <i class="fa fa-order fa-fw"></i> New Order
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                        <i class="fa fa-order fa-fw"></i>New Order from 
+                                        <span class="pull-right text-muted small">{{ Carbon::now()->toDateTimeString() }}</span>
                                     </div>
                                 </a>
                             </li>  
+                            
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -152,6 +154,7 @@
         <script src="{{ asset('admin_vendor/js/morris-data.js') }}"></script>
         <!-- Custom Theme JavaScript -->
         <script src="{{ asset('admin_vendor/js/startmin.js') }}"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
         <script>
             CKEDITOR.replace('editor');
@@ -218,6 +221,18 @@
            
           }
         </script>
+
+        @foreach($Helper::lowStock() as $stock=>$value)
+            
+            <script>
+                swal({
+                    html: true,
+                    title: "Product Running Out of Stock/Out of Stock",
+                    text: "",
+                    icon: "warning",
+                });
+            </script>
+        @endforeach
 
     </body>
 </html>

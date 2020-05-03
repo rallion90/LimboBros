@@ -24,34 +24,21 @@
 					<table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
 						<thead>
 							<tr>
-								<th width="8%">Product Name</th>
-								<th width="10%">Product Quantity</th>
-								<th width="10%">Customer Name</th>
-								<th width="10%">Contact Number</th>
-								<th width="10%">Email</th>
-								<th width="10%">Province</th>
-								<th width="10%">Municipality</th>
-								<th width="10%">Barangay</th>
-								<th width="10%">Street</th>
-								<th width="10%">Action</th>
+								<th width="8%">Order Number</th>
+								<th width="10%">Total</th>
+								<th width="10%"></th>
+								
 
 							</tr>
 						</thead>
 						<tbody>
-							
+						@foreach($succesful_deliver as $success)
 							<tr>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"></td>
-								<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></td>
+								<td style="vertical-align: middle;">{{ $success->order_number }}</td>
+								<td style="vertical-align: middle;">₱{{ number_format(($success->product_quantity * $success->product_price)) }}.00</td>
+								<td style="vertical-align: middle;"><a href="#">View Information</a></td>
 							</tr>
-							
+						@endforeach	
 						</tbody>
 					</table>
 				</div>

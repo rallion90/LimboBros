@@ -49,9 +49,17 @@ class AdminController extends Controller
                  ->groupBy('order_number')
                  ->orderBy('created_at')
                  ->get();
+
+        $get_deliver = DB::table('orders')
+                 ->select('order_number')
+                 ->where('tag_deleted', '=', 0)
+                 ->where('order_status', '=', 1)
+                 ->groupBy('order_number')
+                 ->orderBy('created_at')
+                 ->get();          
         
 
-        return view('Admin.cod', compact('get_cod'));
+        return view('Admin.cod')->with('get_cod', $get_cod)->with('get_deliver', $get_deliver);
     }
 
     public function add_product(Request $request){
@@ -164,7 +172,16 @@ class AdminController extends Controller
     }
 
     public function succesful(){
-        return view('Admin.successful_order');
+        $order = new Order;
+        $succesful_delivery = DB::table('orders')
+                 ->select('order_number', 'product_price', 'product_quantity')
+                 ->where('tag_deleted', '=', 1)
+                 ->where('order_status', '=', 2)
+                 ->groupBy('order_number', 'product_price', 'product_quantity')
+                 ->orderBy('created_at')
+                 ->get();
+
+        return view('Admin.successful_order')->with('succesful_deliver', $succesful_delivery);
     }
 
     public function details($id){
@@ -199,6 +216,12 @@ class AdminController extends Controller
                 $email = $order_total->email;
                 $order_number = $order_total->order_number;
                 $customer_name = $order_total->customer;
+                $product_id = $order_total->product_id;
+                
+                DB::table('products')
+                ->where('product_id', '=', $product_id)
+                ->decrement('product_stock', $order_total->product_quantity);
+
             }
 
             Mail::to($email)->send(new OrderMail($get_order2, $total, $order_number, $customer_name));
@@ -209,6 +232,18 @@ class AdminController extends Controller
 
             
         }
+    }
+
+    public function orderRecieved($id){
+        $order = new Order;
+
+        $update = $order::where('order_number', '=', $id)->update([
+            'order_status' => 2,
+            'tag_deleted' => 1,
+        ]);
+
+        return redirect()->route('customer.index');
+
     }
 
     

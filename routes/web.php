@@ -59,6 +59,7 @@ Route::prefix('admin')->group(function(){
 		Route::get('succesful_order', 'Admin\AdminController@succesful')->name('admin.success');
 		Route::get('order_details/{id}', 'Admin\AdminController@details');
 		Route::get('confirm_order/{id}', 'Admin\AdminController@confirm_order');
+		Route::get('order_recieved/{id}', 'Admin\AdminController@orderRecieved');
 	});	
 });
 
