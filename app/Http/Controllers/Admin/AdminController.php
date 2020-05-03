@@ -217,7 +217,7 @@ class AdminController extends Controller
                 $order_number = $order_total->order_number;
                 $customer_name = $order_total->customer;
                 $product_id = $order_total->product_id;
-                
+
                 DB::table('products')
                 ->where('product_id', '=', $product_id)
                 ->decrement('product_stock', $order_total->product_quantity);

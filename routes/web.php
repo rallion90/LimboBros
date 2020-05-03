@@ -32,6 +32,8 @@ Route::prefix('customer')->group(function(){
 	Route::get('cart', 'CartController@Cart')->name('customer.cart');
 	Route::get('checkout', 'Customer\CustomerController@checkout')->name('customer.checkout');
 	Route::post('cash_on_delivery', 'Customer\CustomerController@cod')->name('customer.cod');
+	Route::get('track_order', 'Customer\CustomerController@orderTracking')->name('customer.orderTracking');
+	Route::get('status', 'Customer\CustomerController@orderStatus')->name('customer.orderStatus');
 
 
 	Route::post('location', 'Customer\CustomerController@location')->name('location');
@@ -60,6 +62,7 @@ Route::prefix('admin')->group(function(){
 		Route::get('order_details/{id}', 'Admin\AdminController@details');
 		Route::get('confirm_order/{id}', 'Admin\AdminController@confirm_order');
 		Route::get('order_recieved/{id}', 'Admin\AdminController@orderRecieved');
+
 	});	
 });
 

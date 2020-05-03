@@ -19,6 +19,9 @@
 
 
   <link rel="stylesheet" href="{{ asset('customer_vendor/css/style.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('customer_vendor/css/status.css') }}">
+
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -28,6 +31,10 @@
         color:white;
         padding-right:30px;
       }
+
+
+
+
   </style>
 </head>
 <body>
@@ -35,10 +42,20 @@
         <ul class="info">
             <a href="#"><li>Faqs</li></a>
             <a href="#"><li>Customer Care</li></a>
+            <a href="{{ route('customer.orderTracking') }}"><li>Track your Order</li></a>
         @if(Auth::guard('customer')->check())
-            <a href="#"><li>{{ ucwords(Auth::guard('customer')->user()->customer_fname) }}'s Account</li></a>
+           
+
+            <li class="dropdown" style="color:white">
+              <a class="dropdown-toggle" role="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">{{ ucwords(Auth::guard('customer')->user()->customer_fname) }}'s Account</span></a>
+              <ul class="dropdown-menu">
+                  <ol><a href="#">Your Orders</a></ol>
+                  <ol><a href="#">Logout</a></ol>
+                  
+              </ul>
+          </li>
         @else
-    
+            <a href="#"><li>Login</li></a>
         @endif
         </ul>
     </div>
@@ -59,30 +76,16 @@
               <li class="nav-item active"><a class="nav-link" href="{{ route('customer.index') }}">Home</a></li>
               <li class="nav-item active"><a class="nav-link" href="{{ route('customer.product') }}">Shop</a></li>
               
-              <li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Blog</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                  <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-                </ul>
-                            </li>
-                            <li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Pages</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="{{ route('customer.login') }}">Login</a></li>
-                  <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-                  <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li>
-                </ul>
-              </li>
+              
               <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
             </ul>
 
             <ul class="nav-shop">
               <li class="nav-item"><a href="{{ route('customer.cart') }}"><i class="ti-search"></i></a></li>
               <li class="nav-item"><a href="{{ route('customer.cart') }}"><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{ Helper::cart_number() }}</span></a> </li>
-              <li class="nav-item"><a class="button button-header"></a></li>
+              <li></li>
+              <li></li>
+              <li></li>
             </ul>
           </div>
         </div>

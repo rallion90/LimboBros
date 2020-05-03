@@ -112,6 +112,14 @@ class CustomerController extends Controller
         //ilalagay sa foreach ang insertion ng data         
     }
 
+    public function orderTracking(){
+        return view('Customer.tracking');
+    }
+
+    public function orderStatus(){
+        return view('Customer.status');
+    }
+
 
 
 
