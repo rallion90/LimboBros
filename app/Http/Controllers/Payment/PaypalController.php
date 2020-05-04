@@ -32,6 +32,8 @@ use PayPal\Api\Invoice;
 
 use Cart;
 
+use Auth;
+
 class PaypalController extends Controller
 {
     //
@@ -95,6 +97,8 @@ class PaypalController extends Controller
     }
 
     public function executePayment(Request $request){
+        $six_digit_random_number = mt_rand(100000000, 999999999);
+
         $apiContext = new \PayPal\Rest\ApiContext(
           new \PayPal\Auth\OAuthTokenCredential(
             'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
@@ -126,29 +130,33 @@ class PaypalController extends Controller
             exit(1);
         }
 
-        //dd($payment->transactions[0]->invoice_number);
-        //dd($payment->id);
-        //d($payment->transactions[0]->item_list[0]->items[0]->sku);
-
-        /*$customer_info = array(
-            "room_id" => $payment->transactions[0]->item_list->items[0]->sku,
-            "room_name" => $payment->transactions[0]->item_list->items[0]->name,
-            "email" => $request->email,
-            "first_name" => $request->firstname,
-            "last_name" => $request->lastname,
-            "date_start" => $request->date_start,
-            "date_end" => $request->date_end,
-            "payment_id" => $payment->id,
-            "invoice_number" => $payment->transactions[0]->invoice_number,  
-        );*/
-        foreach($payment as $info){
+      
+        
             $customer_info = array(
                 "user_id" => Auth::guard('customer')->user()->customer_id,
                 "product_id" => $payment->transactions[0]->item_list->items[0]->sku,
                 "product_name" => $payment->transactions[0]->item_list->items[0]->name,
+                "product_price" => $payment->transactions[0]->item_list->items[0]->price,
+                "product_quantity" => $payment->transactions[0]->item_list->items[0]->quantity,
+                "customer" => $request->first_name." ".$request->last_name,
+                "contact_number" => $request->number,
+                "zipcode" => $request->zipcode,
+                "email" => $request->email,
+                "province" => 1,
+                "municipality" => 1,
+                "barangay" => 2,
+                "street" => $request->street,
+                "order_number" => $six_digit_random_number,
+                "order_type" => 2,
+                "order_status" => 0,
+                "invoice_number" => $payment->transactions[0]->invoice_number,
+                "receipt_number" => $payment->transactions[0]->invoice_number,
+                "payment_id" => $payment->id
             );
             DB::table('orders')->insert($customer_info);
-        }
+        
+
+        return $payment;
         
     }
 }

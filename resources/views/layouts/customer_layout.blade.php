@@ -338,7 +338,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       return actions.request.post('/customer/payment_execute', {
         _token: '{{csrf_token()}}',
         paymentID: data.paymentID,
-        payerID:   data.payerID
+        payerID:   data.payerID,
+        first_name: $('#first').val(),
+        last_name: $('#last').val(),
+        email: $('#email').val(),
+        number: $('#number').val(),
+        zipcode: $('#zipcode').val(),
+        first_name: $('#first').val(),
+        
+        street: $('#street').val()
       })
         .then(function(res) {
           // 3. Show the buyer a confirmation message.
