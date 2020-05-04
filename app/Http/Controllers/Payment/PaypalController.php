@@ -132,7 +132,7 @@ class PaypalController extends Controller
 
       
         
-            $customer_info = array(
+            /*$customer_info = array(
                 "user_id" => Auth::guard('customer')->user()->customer_id,
                 "product_id" => $payment->transactions[0]->item_list->items[0]->sku,
                 "product_name" => $payment->transactions[0]->item_list->items[0]->name,
@@ -153,7 +153,31 @@ class PaypalController extends Controller
                 "receipt_number" => $payment->transactions[0]->invoice_number,
                 "payment_id" => $payment->id
             );
+            DB::table('orders')->insert($customer_info);*/
+        foreach(Cart::getContent() as $items){
+            $customer_info = array(
+                "user_id" => Auth::guard('customer')->user()->customer_id,
+                "product_id" => $items->id,
+                "product_name" => $items->name,
+                "product_price" => $items->price,
+                "product_quantity" => $items->quantity,
+                "customer" => $request->first_name." ".$request->last_name,
+                "contact_number" => $request->number,
+                "zipcode" => $request->zipcode,
+                "email" => $request->email,
+                "province" => 1,
+                "municipality" => 1,
+                "barangay" => 2,
+                "street" => $request->street,
+                "order_number" => $six_digit_random_number,
+                "order_type" => 2,
+                "order_status" => 0,
+                "invoice_number" => $payment->transactions[0]->invoice_number,
+                "receipt_number" => $payment->transactions[0]->invoice_number,
+                "payment_id" => $payment->id
+            );
             DB::table('orders')->insert($customer_info);
+        }    
         
 
         return $payment;
