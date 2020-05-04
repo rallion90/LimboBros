@@ -202,6 +202,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="{{ asset('customer_vendor/js/main.js') }}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+  
 
 
 </body>
@@ -233,22 +234,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     var terms = document.getElementById("f-option4").checked;
 
     if(terms){
-      if(document.getElementById('f-option5').checked) {
-        //validation
-
-        document.getElementById("checkout_form").action = "{{ route('customer.cod') }}";
-        document.getElementById("checkout_form").submit();
-
-      }else if(document.getElementById('f-option6').checked) {
-        document.getElementById("checkout_form").action = "#paypal_route";
-        document.getElementById("checkout_form").submit();
-      }else{
-        swal({
-          icon: "warning",
-          title: "Please Choose Payment Option",
-        });
-      }
-
+      document.getElementById("checkout_form").action = "{{ route('customer.cod') }}";
+       
+      document.getElementById("checkout_form").submit();
     }else{
       alert('Please Read Terms and Condition Before Proceeding to Checkout');
     }
@@ -295,4 +283,69 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     window.location.href='/customer/removeCart/'+id;
   }
 
+  function paypal(){
+    
+  } 
+
+  function cod(){
+
+  }
+
+  
+
 </script>
+
+
+
+<!-- for payment-->
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+
+  paypal.Button.render({
+    env: 'sandbox', // Or 'production'
+    style: {
+      size: 'medium'
+    },
+    // Set up the payment:
+    // 1. Add a payment callback
+
+    payment: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/customer/payment_create', 
+      {
+        _token: '{{csrf_token()}}',
+        first_name: $('#first').val(),
+        last_name: $('#last').val(),
+        email: $('#email').val(),
+        number: $('#number').val(),
+        zipcode: $('#zipcode').val(),
+        first_name: $('#first').val(),
+        province: $('#province').val(),
+        municipality: $('#municipality').val(),
+        barangay: $('#barangay').val(),
+        street: $('#street').val()
+      })
+        .then(function(res) {
+          // 3. Return res.id from the response
+
+          return res.id;
+        });
+    },
+    // Execute the payment:
+    // 1. Add an onAuthorize callback
+    onAuthorize: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/customer/payment_execute', {
+        _token: '{{csrf_token()}}',
+        paymentID: data.paymentID,
+        payerID:   data.payerID
+      })
+        .then(function(res) {
+          // 3. Show the buyer a confirmation message.
+        });
+    }
+  }, '#paypal-button');
+</script>
+
+
+

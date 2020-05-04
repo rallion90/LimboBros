@@ -35,6 +35,11 @@ Route::prefix('customer')->group(function(){
 	Route::get('track_order', 'Customer\CustomerController@orderTracking')->name('customer.orderTracking');
 	Route::get('status', 'Customer\CustomerController@orderStatus')->name('customer.orderStatus');
 
+	//Paypal Execution
+	Route::post('payment_create', 'Payment\PaypalController@createPayment');
+	Route::post('payment_execute', 'Payment\PaypalController@executePayment');
+	//end Paypal Execution
+
 
 	Route::post('location', 'Customer\CustomerController@location')->name('location');
 

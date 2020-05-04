@@ -34,7 +34,7 @@
                             @enderror
                         </div>
                         <div class="col-md-4 form-group p_star">
-                            <input type="text" class="form-control" id="number" name="email" placeholder="Email">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                             <span class="placeholder" data-placeholder="Phone number"></span>
                             @error('email')
                                 <span style="color:red"><p>{{ ucwords($message) }}</p></span>
@@ -48,7 +48,7 @@
                             @enderror
                         </div>
                         <div class="col-md-4 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="zipcode" placeholder="Zip Code">
+                            <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code">
                             <span class="placeholder" data-placeholder="Email Address"></span>
                             @error('zipcode')
                                 <span style="color:red"><p>{{ ucwords($message) }}</p></span>
@@ -57,7 +57,7 @@
 
                         
                         <div class="col-md-12 form-group p_star">
-                            <select name="province" class="country_select province" data-dependent="municipality">
+                            <select name="province" id="province" class="country_select province" data-dependent="municipality">
                                 <option value="0">Choose Province</option>
                                 <option value="1">Municipality</option>
                                 <option value="2">Country</option>
@@ -69,7 +69,7 @@
                             @enderror
                         </div>
                         <div class="col-md-12 form-group p_star" data-dependent="barangay">
-                            <select class="country_select" name="municipality">
+                            <select class="country_select" id="municipality" name="municipality">
                                 <option value="0">Choose Municipality</option>
                                 <option value="1">Municipality</option>
                                 <option value="2">Country</option>
@@ -80,7 +80,7 @@
                             @enderror
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <select class="country_select" name="barangay">
+                            <select class="country_select" id="barangay" name="barangay">
                                 <option value="0">Choose Barangay</option>
                                 <option value="1">Barangay</option>
                                 <option value="2">Country</option>
@@ -120,20 +120,11 @@
                             <li><a href="#">Total <span>₱{{ number_format(Cart::getTotal()) }}.00</span></a></li>
                         </ul>
                         <div class="payment_item">
-                            <div class="radion_btn">
-                                <input type="radio" class="payment_option" id="f-option5" name="selector">
-                                <label for="f-option5">Cash on Delivery</label>
-                                <div class="check"></div>
-                            </div>
+                            
                             <p>Buy via Cash on Delivery. *Important Note Cash on delivery dont get any of your important details like credit card.</p>
                         </div>
                         <div class="payment_item active">
-                            <div class="radion_btn">
-                                <input type="radio" class="payment_option" id="f-option6" name="selector" value="2">
-                                <label for="f-option6">Paypal </label>
-                                <img src="img/product/card.jpg" alt="">
-                                <div class="check"></div>
-                            </div>
+                            
                             <p>Pay via PayPal; you can pay with your paypal account if you don’t want to buy on door to door.</p>
                         </div>
                         <div class="creat_account">
@@ -141,8 +132,13 @@
                             <label for="f-option4">I’ve read and accept the </label>
                             <a href="#">terms & conditions*</a>
                         </div>
+
                         <div class="text-center">
-                            <button class="button button-paypal" onclick="checkout()" id="checkout">Checkout</button>
+                            <button class="button button-paypal" onclick="checkout()">Cash on Delivery</button>
+                        </div>
+                        <p class="text-center">Or</p>
+                        <div class="text-center">
+                            <div id="paypal-button"></div>
                         </div>
                     </div>
                 </div>
