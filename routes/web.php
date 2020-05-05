@@ -67,6 +67,8 @@ Route::prefix('admin')->group(function(){
 		Route::get('order_details/{id}', 'Admin\AdminController@details');
 		Route::get('confirm_order/{id}', 'Admin\AdminController@confirm_order');
 		Route::get('order_recieved/{id}', 'Admin\AdminController@orderRecieved');
+		Route::get('paypal', 'Admin\AdminController@paypalOrders')->name('admin.paypal');
+		Route::get('paypal/{id}', 'Admin\AdminController@paypalConfirm')->name('paypal');
 
 	});	
 });

@@ -44,6 +44,7 @@ class AdminController extends Controller
         //$get_cod = $order::where('order_type', '=', 1)->where('order_status', '=', 0)->where('tag_deleted', '=', 0)->get();
         $get_cod = DB::table('orders')
                  ->select('order_number')
+                 ->where('order_type', '=', 1)
                  ->where('tag_deleted', '=', 0)
                  ->where('order_status', '=', 0)
                  ->groupBy('order_number')
@@ -52,6 +53,7 @@ class AdminController extends Controller
 
         $get_deliver = DB::table('orders')
                  ->select('order_number')
+                 ->where('order_type', '=', 1)
                  ->where('tag_deleted', '=', 0)
                  ->where('order_status', '=', 1)
                  ->groupBy('order_number')
@@ -174,10 +176,10 @@ class AdminController extends Controller
     public function succesful(){
         $order = new Order;
         $succesful_delivery = DB::table('orders')
-                 ->select('order_number', 'product_price', 'product_quantity')
+                 ->select('order_number', 'order_type')
                  ->where('tag_deleted', '=', 1)
                  ->where('order_status', '=', 2)
-                 ->groupBy('order_number', 'product_price', 'product_quantity')
+                 ->groupBy('order_number', 'order_type')
                  ->orderBy('created_at')
                  ->get();
 
@@ -234,6 +236,22 @@ class AdminController extends Controller
         }
     }
 
+    public function paypalOrders(){
+        $orders = new Order;
+        $get_paypal = $orders::where('order_type', '=', 2)->where('order_status', '=', 0)->where('tag_deleted', '=', 0)->groupBy('order_number')->get();
+
+        $get_deliver = DB::table('orders')
+                 ->select('order_number')
+                 ->where('order_type', '=', 2)
+                 ->where('tag_deleted', '=', 0)
+                 ->where('order_status', '=', 1)
+                 ->groupBy('order_number')
+                 ->orderBy('created_at')
+                 ->get();
+
+        return view('Admin.paypal_orders')->with('get_paypal', $get_paypal)->with('get_deliver', $get_deliver);
+    }
+
     public function orderRecieved($id){
         $order = new Order;
 
@@ -244,6 +262,39 @@ class AdminController extends Controller
 
         return redirect()->route('customer.index');
 
+    }
+
+    public function paypalConfirm($id){
+        $order = new Order;
+        $update = $order::where('order_number', '=', $id)->update([
+            'order_status' => 1
+        ]);
+
+        if($update){
+            $get_order2 = $order::where('order_number', '=', $id)->get();
+
+            $total = 0;
+            $email = "";
+            $order_number = "";
+            $customer_name = "";
+            foreach($get_order2 as $order_total){
+                $total += ($order_total->product_quantity * $order_total->product_price);
+                $email = $order_total->email;
+                $order_number = $order_total->order_number;
+                $customer_name = $order_total->customer;
+                $product_id = $order_total->product_id;
+
+                DB::table('products')
+                ->where('product_id', '=', $product_id)
+                ->decrement('product_stock', $order_total->product_quantity);
+
+            }
+
+            Mail::to($email)->send(new OrderMail($get_order2, $total, $order_number, $customer_name));
+
+            
+            return redirect()->route('admin.cod')->with('success', 'Order Succesfully Confirmed');
+        }    
     }
 
     

@@ -76,8 +76,8 @@ class PaypalController extends Controller
 
         
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
-            ->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
+        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/customer/index")
+            ->setCancelUrl("http://127.0.0.1:8000/customer/index");
 
         $payment = new Payment();
         $payment->setIntent("sale")
@@ -132,28 +132,7 @@ class PaypalController extends Controller
 
       
         
-            /*$customer_info = array(
-                "user_id" => Auth::guard('customer')->user()->customer_id,
-                "product_id" => $payment->transactions[0]->item_list->items[0]->sku,
-                "product_name" => $payment->transactions[0]->item_list->items[0]->name,
-                "product_price" => $payment->transactions[0]->item_list->items[0]->price,
-                "product_quantity" => $payment->transactions[0]->item_list->items[0]->quantity,
-                "customer" => $request->first_name." ".$request->last_name,
-                "contact_number" => $request->number,
-                "zipcode" => $request->zipcode,
-                "email" => $request->email,
-                "province" => 1,
-                "municipality" => 1,
-                "barangay" => 2,
-                "street" => $request->street,
-                "order_number" => $six_digit_random_number,
-                "order_type" => 2,
-                "order_status" => 0,
-                "invoice_number" => $payment->transactions[0]->invoice_number,
-                "receipt_number" => $payment->transactions[0]->invoice_number,
-                "payment_id" => $payment->id
-            );
-            DB::table('orders')->insert($customer_info);*/
+        
         foreach(Cart::getContent() as $items){
             $customer_info = array(
                 "user_id" => Auth::guard('customer')->user()->customer_id,
@@ -177,10 +156,18 @@ class PaypalController extends Controller
                 "payment_id" => $payment->id
             );
             DB::table('orders')->insert($customer_info);
-        }    
+        }
+
+        Cart::clear();
+
+
         
 
-        return $payment;
+        return $this->paymentSuccess();
         
+    }
+
+    public function paymentSuccess(){
+        return redirect()->route('customer.index')->with('orderSuccess', 'Your Order has been Recieved. Please wait for the sellers confirmation');
     }
 }

@@ -104,8 +104,11 @@
 									<div class="row">
 										<div class="col-md-12 text-right identity">
 											<a href="/admin/confirm_order/{{ $id }}" class="btn btn-success">Confirm Order</a>
-
+										@if($get_info->order_type == 2)
+											
+										@else
 											<button class="btn btn-danger">Reject Order</button>
+										@endif		
 
 										</div>
 									</div>

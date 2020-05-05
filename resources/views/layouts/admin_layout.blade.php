@@ -1,4 +1,5 @@
 <?php $Helper = new Helper;?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Startmin - Bootstrap Admin Theme</title>
+        <title>@if($Helper::getOrderCount()>0) ({{ $Helper::getOrderCount() }}) @endif Limbo Bros</title>
 
         <!-- Bootstrap Core CSS -->
        <link href="{{ asset('admin_vendor/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -103,7 +104,7 @@
                                 <a href="/admin/cash_on_delivery"><i class="fa fa-money fa-fw"></i> Cash on Delivery</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-paypal fa-fw"></i> Paypal</a>
+                                <a href="/admin/paypal"><i class="fa fa-paypal fa-fw"></i> Paypal</a>
                             </li>
                             <li>
                                 <a href="/admin/succesful_order"><i class="fa fa-success fa-fw"></i> Succesful Orders</a>
@@ -233,6 +234,19 @@
                 });
             </script>
         @endforeach
+
+        @foreach($Helper::PaypalPayment() as $paypalOrders)
+            <script>
+                swal({
+                    html: true,
+                    title: "New Paypal Orders",
+                    text: "You have a new Paypal Orders",
+                    icon: "info",
+                });
+            </script>
+        @endforeach
+
+        
 
     </body>
 </html>

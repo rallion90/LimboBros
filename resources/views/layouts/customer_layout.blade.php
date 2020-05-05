@@ -349,7 +349,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         street: $('#street').val()
       })
         .then(function(res) {
-          // 3. Show the buyer a confirmation message.
+          window.location.href = "{{ route('customer.index') }}";
         });
     }
   }, '#paypal-button');

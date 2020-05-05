@@ -4,7 +4,7 @@
 	
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">COD Orders</h1>
+			<h1 class="page-header">Finish Orders</h1>
 		</div>
 		<div class="col-md-12">
 		</div>
@@ -14,7 +14,7 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<span class="fa fa-inbox fa-fw"></span> Cash on Delivery Orders
+					<span class="fa fa-inbox fa-fw"></span> Finish Orders
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
@@ -25,7 +25,7 @@
 						<thead>
 							<tr>
 								<th width="8%">Order Number</th>
-								<th width="10%">Total</th>
+								<th width="10%">Order Type</th>
 								<th width="10%"></th>
 								
 
@@ -35,7 +35,11 @@
 						@foreach($succesful_deliver as $success)
 							<tr>
 								<td style="vertical-align: middle;">{{ $success->order_number }}</td>
-								<td style="vertical-align: middle;">₱{{ number_format(($success->product_quantity * $success->product_price)) }}.00</td>
+							@if($success->order_type == 1)	
+								<td style="vertical-align: middle;">Cash on Deliver</td>
+							@else
+								<td style="vertical-align: middle;">Paypal</td>
+							@endif		
 								<td style="vertical-align: middle;"><a href="#">View Information</a></td>
 							</tr>
 						@endforeach	

@@ -53,4 +53,19 @@ class Helper{
 		return $check_timestamps;
 	}
 
+	public static function PaypalPayment(){
+		$order = new Order;
+		$get_paypal_order = $order::where('order_type', '=', 2)->where('order_status', '=', 0)->get();
+
+	
+		return $get_paypal_order;
+	}
+
+	public static function getOrderCount(){
+		$order = new Order;
+		$count = $order::where('order_status', '=', 0)->where('tag_deleted', '=', 0)->count();
+
+		return $count; 
+	}
+
 }

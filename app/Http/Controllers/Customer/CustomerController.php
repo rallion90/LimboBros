@@ -106,10 +106,16 @@ class CustomerController extends Controller
             $insert = $order::insert($data);
         }
 
-        Cart::clear();   
+        Cart::clear(); 
 
-        return redirect()->route('customer.index')->with('orderSuccess', 'Your Order has been Recieved. Please wait for the sellers confirmation');
+        return $this->paymentSuccess();  
+
+        
         //ilalagay sa foreach ang insertion ng data         
+    }
+
+    public function paymentSuccess(){
+        return redirect()->route('customer.index')->with('orderSuccess', 'Your Order has been Recieved. Please wait for the sellers confirmation');
     }
 
     public function orderTracking(){
