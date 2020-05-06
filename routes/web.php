@@ -34,6 +34,7 @@ Route::prefix('customer')->group(function(){
 	Route::post('cash_on_delivery', 'Customer\CustomerController@cod')->name('customer.cod');
 	Route::get('track_order', 'Customer\CustomerController@orderTracking')->name('customer.orderTracking');
 	Route::get('status', 'Customer\CustomerController@orderStatus')->name('customer.orderStatus');
+	Route::get('myorders', 'Customer\CustomerController@myOrders')->name('customer.myOrders');
 
 	//Paypal Execution
 	Route::post('payment_create', 'Payment\PaypalController@createPayment');

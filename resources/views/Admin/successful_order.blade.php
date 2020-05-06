@@ -25,7 +25,7 @@
 						<thead>
 							<tr>
 								<th width="8%">Order Number</th>
-								<th width="10%">Order Type</th>
+								<th width="10%">Total</th>
 								<th width="10%"></th>
 								
 
@@ -34,13 +34,9 @@
 						<tbody>
 						@foreach($succesful_deliver as $success)
 							<tr>
-								<td style="vertical-align: middle;">{{ $success->order_number }}</td>
-							@if($success->order_type == 1)	
-								<td style="vertical-align: middle;">Cash on Deliver</td>
-							@else
-								<td style="vertical-align: middle;">Paypal</td>
-							@endif		
-								<td style="vertical-align: middle;"><a href="#">View Information</a></td>
+								<td style="vertical-align: middle;">{{ $success->order_number }}</td> 
+								<td style="vertical-align: middle;">₱ {{ number_format($success->total) }}.00</td>	
+								<td style="vertical-align: middle;"><a href="/admin/order_details/{{ $success->order_number }}">View Information</a></td>
 							</tr>
 						@endforeach	
 						</tbody>

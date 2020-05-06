@@ -12,6 +12,8 @@ use App\Category;
 
 use App\Order;
 
+use App\FinishOrder;
+
 use DB;
 
 use Mail;
@@ -176,16 +178,10 @@ class AdminController extends Controller
     }
 
     public function succesful(){
-        $order = new Order;
-        $succesful_delivery = DB::table('orders')
-                 ->select('order_number', 'order_type')
-                 ->where('tag_deleted', '=', 1)
-                 ->where('order_status', '=', 2)
-                 ->groupBy('order_number', 'order_type')
-                 ->orderBy('created_at')
-                 ->get();
+        
+        $order_success = FinishOrder::where('tag_deleted', '=', 0)->get();        
 
-        return view('Admin.successful_order')->with('succesful_deliver', $succesful_delivery);
+        return view('Admin.successful_order')->with('succesful_deliver', $order_success);
     }
 
     public function details($id){
@@ -255,13 +251,26 @@ class AdminController extends Controller
     }
 
     public function orderRecieved($id){
-        $order = new Order;
-
-        $update = $order::where('order_number', '=', $id)->update([
+    
+        Order::where('order_number', '=', $id)->update([
             'order_status' => 2,
-            'delivered_at' => Carbon::now()->toDateTimeString(),
             'tag_deleted' => 1,
         ]);
+
+        $orders = Order::where('order_number', '=', $id)->get();
+
+        $total = 0;
+        foreach($orders as $order){
+            $total += ($order->product_quantity * $order->product_price);
+        }
+
+        $order_data = array(
+            'order_number' => $id,
+            'total' => $total,
+            'delivered_at' => Carbon::now()->toDateTimeString(),
+        );
+
+        FinishOrder::insert($order_data);
 
         return redirect()->route('customer.index');
 

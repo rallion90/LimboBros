@@ -31,14 +31,16 @@ class CustomerController extends Controller
     //
     public function index(){
         $product = new Product;
-        $active_product = $product::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(3)->get();
+        $active_product = $product::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(10)->get();
     	return view('Customer.index', compact('active_product'));
     }
 
     public function product_details($id){
         $product = new Product;
         $get_product = $product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
-        return view('Customer.product_detail', compact('get_product'));
+
+        $get_related_product = $product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->get();
+        return view('Customer.product_detail')->with('get_product', $get_product)->with('related_product', $get_related_product);
     }
 
     public function cart(){
@@ -125,6 +127,12 @@ class CustomerController extends Controller
     public function orderStatus(){
         return view('Customer.status');
     }
+
+    public function myOrders(){
+        $orders = Order::where('user_id', '=', Auth::guard('customer')->user()->customer_id)->orderBy('created_at', 'DESC')->get();
+        return view('Customer.my_order')->with('orders', $orders);
+    }
+
 
 
 

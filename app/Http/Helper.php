@@ -3,6 +3,8 @@ namespace App\Http;
 
 use App\Product;
 
+use App\FinishOrder;
+
 use App\Category;
 
 use App\Order;
@@ -70,9 +72,26 @@ class Helper{
 
 	public static function YearlyAnalytics(){
 		$order = new Order;
-		$orders = $order::where('')
+		//$orders = $order::where('')
 
+	}
 
+	public static function SuccesfulOrders(){
+		$count = FinishOrder::where('tag_deleted', '=', 0)->count();
+
+		return $count;
+	}
+
+	public static function expectedSales(){
+		$products = Product::where('tag_deleted', '=', 0)->get();
+
+		$total = 0;
+
+		foreach($products as $totals){
+			$total += ($totals->product_stock * $totals->product_price);  
+		}
+
+		return $total;
 	}
 
 }
