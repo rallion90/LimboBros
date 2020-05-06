@@ -16,6 +16,8 @@ use PayPal\Api\Details;
 
 use PayPal\Api\Item;
 
+
+
 use PayPal\Api\ItemList;
 
 use PayPal\Api\Payer;
@@ -59,9 +61,12 @@ class PaypalController extends Controller
             	->setQuantity($cart_items->quantity);
         	$items[] = $item;
         }
+
+        
 		
         $itemList = new ItemList();
         $itemList->setItems($items);
+        
 
         $amount = new Amount();
         $amount->setCurrency("USD")

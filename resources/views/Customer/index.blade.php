@@ -80,7 +80,7 @@
     </section>-->
     <!-- ================ offer section end ================= -->
     <!-- ================ Best Selling item  carousel ================= -->
-    <section class="section-margin calc-60px">
+    <!--<section class="section-margin calc-60px">
         <div class="container">
             <div class="section-intro pb-60px">
                 <p>Popular Item in the market</p>
@@ -209,7 +209,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
     <!-- ================ Best Selling item  carousel end ================= -->
     <!-- ================ Blog section start ================= -->
     

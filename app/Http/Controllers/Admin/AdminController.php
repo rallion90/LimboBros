@@ -18,6 +18,8 @@ use Mail;
 
 use App\Mail\OrderMail;
 
+use Carbon;
+
 class AdminController extends Controller
 {
     //
@@ -257,6 +259,7 @@ class AdminController extends Controller
 
         $update = $order::where('order_number', '=', $id)->update([
             'order_status' => 2,
+            'delivered_at' => Carbon::now()->toDateTimeString(),
             'tag_deleted' => 1,
         ]);
 

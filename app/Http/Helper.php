@@ -68,4 +68,11 @@ class Helper{
 		return $count; 
 	}
 
+	public static function YearlyAnalytics(){
+		$order = new Order;
+		$orders = $order::where('')
+
+
+	}
+
 }

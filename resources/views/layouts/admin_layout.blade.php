@@ -153,6 +153,7 @@
         <script src="{{ asset('admin_vendor/js/raphael.min.js') }}"></script>
         <script src="{{ asset('admin_vendor/js/morris.min.js') }}"></script>
         <script src="{{ asset('admin_vendor/js/morris-data.js') }}"></script>
+        <script src="{{ asset('admin_vendor/js/canvasjs.min.js') }}"></script>
         <!-- Custom Theme JavaScript -->
         <script src="{{ asset('admin_vendor/js/startmin.js') }}"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -162,9 +163,27 @@
         </script>
 
         <script>
-            tinymce.init({
-                selector: '#editor'
-            });
+            window.onload = function () {
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    title:{
+                        text: "My First Chart in CanvasJS"              
+                    },
+                    data: [              
+                    {
+                        // Change type to "doughnut", "line", "splineArea", etc.
+                        type: "column",
+                        dataPoints: [
+                            { label: "apple",  y: 10  },
+                            { label: "orange", y: 15  },
+                            { label: "banana", y: 25  },
+                            { label: "mango",  y: 30  },
+                            { label: "grape",  y: 28  }
+                        ]
+                    }
+                    ]
+                });
+                chart.render();
+            }
         </script>
 
         <script>
@@ -180,47 +199,6 @@
               "responsive": true
             });
           });
-        </script>
-
-        
-
-        <script>
-          window.onload = function() {
- 
-          var dataPoints = [];
-           
-          var chart = new CanvasJS.Chart("chartContainer", {
-            click: visitorsChartDrilldownHandler,
-            animationEnabled: true,
-            theme: "light2",
-            title: {
-              text: "Daily Sales Data"
-            },
-            axisY: {
-              title: "Units",
-              titleFontSize: 24
-            },
-            data: [{
-              type: "column",
-              yValueFormatString: "#,### Units",
-              dataPoints: dataPoints
-            }]
-          });
-           
-          function addData(data) {
-            for (var i = 0; i < data.length; i++) {
-              dataPoints.push({
-                x: new Date(data[i].date),
-                y: data[i].units
-              });
-            }
-            chart.render();
-           
-          }
-           
-          $.getJSON("https://canvasjs.com/data/gallery/javascript/daily-sales-data.json", addData);
-           
-          }
         </script>
 
         @foreach($Helper::lowStock() as $stock=>$value)

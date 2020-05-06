@@ -38,7 +38,7 @@
 								<tr>
 									<td style="vertical-align: middle;">{{ $paypal->order_number }}</td>
 									
-									<td style="vertical-align: middle;"><a href="/admin/order_details/{{ $paypal->order_number }}">View Information</a>&nbsp; <a href="/admin/paypal/{{ $paypal->order_number }}">Confirm Order</a>&nbsp; <a href="https://www.sandbox.paypal.com/invoice/create">Create Invoice</a></td>
+									<td style="vertical-align: middle;"><a href="/admin/order_details/{{ $paypal->order_number }}">View Information</a>&nbsp; <a href="/admin/paypal/{{ $paypal->order_number }}">Confirm Order</a>&nbsp; <a href="https://www.sandbox.paypal.com/invoice/create" target="_blank">Create Invoice</a></td>
 								</tr>
 							@endforeach
 							</tbody>
