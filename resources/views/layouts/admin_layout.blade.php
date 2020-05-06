@@ -77,7 +77,7 @@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i> {{ ucwords(Auth::user()->name) }} <b class="caret"></b>
+                            <i class="fa fa-user fa-fw"></i> {{ ucwords(Auth::guard('admin')->user()->admin_name) }} <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>

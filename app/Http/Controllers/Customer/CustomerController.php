@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 
 use App\Product;
 
+use App\Customer;
+
+use Hash;
+
 use App\Municipality;
 
 use Illuminate\Http\Request;
@@ -131,6 +135,31 @@ class CustomerController extends Controller
     public function myOrders(){
         $orders = Order::where('user_id', '=', Auth::guard('customer')->user()->customer_id)->orderBy('created_at', 'DESC')->get();
         return view('Customer.my_order')->with('orders', $orders);
+    }
+
+    public function customer_register(){
+        return view('Customer.register');
+    }
+
+    public function customer_registerTrigger(Request $request){
+        $request->validate([
+            'firstname' => 'required|max:60',
+            'middlename' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email',
+            'password' => 'min:6|required|required_with:password_confirmation|same:confirmPassword',
+            'confirmPassword' => 'required|min:6'
+        ]);
+
+        Customer::create([
+            'customer_fname' => $request->firstname,
+            'customer_mname' => $request->middlename,
+            'customer_lname' => $request->lastname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('customer.login')->with('success', 'Account Register Succesfully');
     }
 
 

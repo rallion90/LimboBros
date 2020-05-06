@@ -28,7 +28,7 @@
                         <div class="hover">
                             <h4>New to our website?</h4>
                             <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                            <a class="button button-account" href="register.html">Create an Account</a>
+                            <a class="button button-account" href="{{ route('customer.customer_register') }}">Create an Account</a>
                         </div>
                     </div>
                 </div>
@@ -37,6 +37,13 @@
                         <h3>Log in to enter</h3>
                         <form class="row login_form" action="{{ route('customer.login.submit') }}" method="post" id="contactForm" >
                             @csrf
+                            
+                            @if(Session::has('success'))
+                                <div class="alert alert-success alert-dismissible fade in">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong></strong> {{ Session::get('success') }}
+                                </div>
+                            @endif
                             <div class="col-md-12 form-group">
                                 <input type="email" class="form-control" id="name" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
                             </div>
