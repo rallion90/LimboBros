@@ -33,10 +33,12 @@ Route::prefix('customer')->group(function(){
 	Route::get('checkout', 'Customer\CustomerController@checkout')->name('customer.checkout');
 	Route::post('cash_on_delivery', 'Customer\CustomerController@cod')->name('customer.cod');
 	Route::get('track_order', 'Customer\CustomerController@orderTracking')->name('customer.orderTracking');
+	Route::post('track_order', 'Customer\CustomerController@orderTrackingTrigger')->name('customer.trackingTrigger');
 	Route::get('status', 'Customer\CustomerController@orderStatus')->name('customer.orderStatus');
 	Route::get('myorders', 'Customer\CustomerController@myOrders')->name('customer.myOrders');
 	Route::get('customer_register', 'Customer\CustomerController@customer_register')->name('customer.customer_register');
 	Route::post('customer_register', 'Customer\CustomerController@customer_registerTrigger')->name('customer.customer_registerTrigger');
+
 
 	//Paypal Execution
 	Route::post('payment_create', 'Payment\PaypalController@createPayment');

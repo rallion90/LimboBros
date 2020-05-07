@@ -65,12 +65,14 @@
 	<div class="container">
 		<div class="section-intro pb-60px">
 			<p>Product in the Same Category</p>
-			<h2>Top <span class="section-intro__style">Product</span></h2>
+			<h2><span class="section-intro__style">Products</span></h2>
 		</div>
 		<div class="row mt-30">
+		@foreach($related_product as $related)	
 			<div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
+				
 				<div class="single-search-product-wrapper">
-				@foreach($related_product as $related)		
+						
 					<div class="single-search-product d-flex">
 						<a href="#"><img src="{{ asset('image') }}/{{ $related->product_image }}" alt=""></a>
 						<div class="desc">
@@ -78,11 +80,9 @@
 							<div class="price">${{ ucwords($related->product_price) }}</div>
 						</div>
 					</div>
-					
-				@endforeach	
 				</div>
 			</div>
-			
+		@endforeach	
 			
 		</div>
 	</div>

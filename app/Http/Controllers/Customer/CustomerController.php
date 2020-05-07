@@ -34,17 +34,20 @@ class CustomerController extends Controller
 {
     //
     public function index(){
-        $product = new Product;
-        $active_product = $product::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(10)->get();
+        $active_product = Product::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(10)->get();
     	return view('Customer.index', compact('active_product'));
     }
 
     public function product_details($id){
-        $product = new Product;
-        $get_product = $product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
+        $get_product = Product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
 
-        $get_related_product = $product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->get();
-        return view('Customer.product_detail')->with('get_product', $get_product)->with('related_product', $get_related_product);
+        $plucking = Product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->pluck('product_category');
+
+        //$get_category = $get_product->pluck('product_category')->all();
+
+        $related = Product::where('tag_deleted', '=', 0)->where('product_category', '=', $plucking)->get();
+
+        return view('Customer.product_detail')->with('get_product', $get_product)->with('related_product', $related);
     }
 
     public function cart(){
@@ -160,6 +163,23 @@ class CustomerController extends Controller
         ]);
 
         return redirect()->route('customer.login')->with('success', 'Account Register Succesfully');
+    }
+
+    public function orderTrackingTrigger(Request $request){
+        $request->validate([
+            'order_number' => 'required|numeric',
+            'email' => 'required|email',
+        ]);
+
+        $track_order = Order::where('order_number', '=', $request->order_number)->where('email', '=', $request->email)->groupBy('order_number')->get();
+
+        $items = Order::where('order_number', '=', $request->order_number)->where('email', '=', $request->email)->get();
+
+        if(!$track_order->isEmpty()){
+            return view('Customer.status')->with('orders', $track_order)->with('items', $items);
+        }else{
+            return back()->with('notFound', 'Invalid Order Number or Email');
+        }
     }
 
 
