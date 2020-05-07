@@ -22,7 +22,7 @@
 					<h3>{{ ucwords($get_product->product_name) }}</h3>
 					<h2>₱{{ number_format($get_product->product_price) }}.00</h2>
 					<ul class="list">
-						<li><a class="active" href="#"><span>Category</span> : {{ ucwords($get_product->product_category) }}</a></li>
+						<li><a class="active" href="#"><span>Category</span> : {{ ucwords($get_product->cat->category_name) }}</a></li>
 						<li><a href="#"><span>Availibility</span> : In Stock</a></li>
 					</ul>
 					<p>

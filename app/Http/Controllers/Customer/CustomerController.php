@@ -34,12 +34,12 @@ class CustomerController extends Controller
 {
     //
     public function index(){
-        $active_product = Product::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(10)->get();
+        $active_product = Product::with('cat')->where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->take(10)->get();
     	return view('Customer.index', compact('active_product'));
     }
 
     public function product_details($id){
-        $get_product = Product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
+        $get_product = Product::with('cat')->where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->first();
 
         $plucking = Product::where('product_stock', '!=', 0)->where('product_id', '=', $id)->where('tag_deleted', '=', 0)->pluck('product_category');
 
@@ -56,7 +56,7 @@ class CustomerController extends Controller
 
     public function products(){
         $products = new Product;
-        $get_product = $products::where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->get();
+        $get_product = $products::with('cat')->where('product_stock', '!=', 0)->where('tag_deleted', '=', 0)->get();
     	return view('Customer.product_list', compact('get_product'));
     }
 

@@ -53,7 +53,7 @@
                             <tr>
                                 <td style="vertical-align: middle;"><img src="{{ asset('image') }}/{{ $product->product_image }}" width="100" alt="Product Image"></td>
                                 <td style="vertical-align: middle;"><center>{{ $product->product_name }}</center></td>
-                                <td style="vertical-align: middle;"><center>{{ $product->product_category }}</center></td>
+                                <td style="vertical-align: middle;"><center>{{ ucwords($product->cat->category_name) }}</center></td>
                                 <td style="vertical-align: middle;"><center>{{ $product->product_stock }}</center></td>
                                 <td style="vertical-align: middle;"><center>₱ {{ number_format($product->product_price) }}</center></td>
                                 <td style="vertical-align: middle;"><center>{{ $product->product_description }}</center></td>

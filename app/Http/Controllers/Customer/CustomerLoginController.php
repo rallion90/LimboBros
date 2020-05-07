@@ -20,7 +20,11 @@ class CustomerLoginController extends Controller
 	}
 
     public function LoginForm(){
-    	return view('Customer/login');
+
+        
+        return view('Customer/login');
+
+    	
     }
 
     public function Login(Request $request){

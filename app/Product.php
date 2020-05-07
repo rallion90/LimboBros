@@ -18,6 +18,6 @@ class Product extends Model
     ];
 
     public function cat(){
-    	return $this->hasOne('App\Category', 'product_category', 'category_id');
+    	return $this->belongsTo(Category::class, 'product_category');
     }
 }

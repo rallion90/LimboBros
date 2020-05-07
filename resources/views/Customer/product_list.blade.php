@@ -66,7 +66,7 @@
                                     </ul>
                                 </div>
                                 <div class="card-body">
-                                    <p>{{ $product->product_category }}</p>
+                                    <p>{{ ucwords($product->cat->category_name) }}</p>
                                     <h4 class="card-product__title"><a href="/customer/product_details/{{ $product->product_id }}">{{ ucwords($product->product_name) }}</a></h4>
                                     <p class="card-product__price">₱{{ number_format($product->product_price) }}.00</p>
                                 </div>

@@ -14,4 +14,8 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = ['category_id', 'category_name'];
+
+    
+
+    
 }

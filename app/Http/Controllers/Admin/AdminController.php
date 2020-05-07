@@ -39,7 +39,7 @@ class AdminController extends Controller
 
     public function product_list(){
         $product = new Product();
-        $get_product = $product::all();
+        $get_product = $product::with('cat')->get();
     	return view('Admin.product_list', compact('get_product'));
     }
 
