@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Barangay extends Model
 {
     //
+    protected $primaryKey = 'brgyCode';
+
     protected $table = "refbrgy";
 
     public $timestamps = false;
 
-    protected $fillable = ['brgyDesc', 'citymunCode'];
+    protected $fillable = ['brgyDesc', 'regCode', 'provCode', 'citymunCode'];
 }
+
+

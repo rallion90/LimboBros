@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
-                    <form class="row contact_form" name="checkoutForm" id="checkout_form" action="#" method="post" novalidate="novalidate">
+                    <form class="row contact_form" name="checkoutForm" id="checkout_form" action="#" method="post">
                         @csrf
                         
                         <div class="col-md-6 form-group p_star">
@@ -57,39 +57,32 @@
 
                         
                         <div class="col-md-12 form-group p_star">
-                            <select name="province" id="province" class="country_select province" data-dependent="municipality">
-                                <option value="0">Choose Province</option>
-                                <option value="1">Municipality</option>
-                                <option value="2">Country</option>
-                                <option value="4">Country</option>
+                            <select name="province" id="province" class="country_select province">
+                                <option value="null">Choose Province</option>
+                            @foreach($Helper::province() as $province)
+                                <option value="{{ $province->provCode }}">{{ $province->provDesc }}</option>
+                            @endforeach
                             
                             </select>
                             @error('province')
                                 <span style="color:red"><p>{{ ucwords($message) }}</p></span>
                             @enderror
                         </div>
-                        <div class="col-md-12 form-group p_star" data-dependent="barangay">
-                            <select class="country_select" id="municipality" name="municipality">
-                                <option value="0">Choose Municipality</option>
-                                <option value="1">Municipality</option>
-                                <option value="2">Country</option>
-                                <option value="4">Country</option>
-                            </select>
-                            @error('municipality')
-                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
-                            @enderror
-                        </div>
+
                         <div class="col-md-12 form-group p_star">
-                            <select class="country_select" id="barangay" name="barangay">
-                                <option value="0">Choose Barangay</option>
-                                <option value="1">Barangay</option>
-                                <option value="2">Country</option>
-                                <option value="4">Country</option>
+                            <select name="municipality" id="municipality" class="country_select municipality">
+                               <option value="null">Choose Municipality</option>
                             </select>
-                            @error('barangay')
-                                <span style="color:red"><p>{{ ucwords($message) }}</p></span>
-                            @enderror
                         </div>
+
+                        <div class="col-md-12 form-group p_star">
+                            <select name="barangay" id="barangay" class="country_select barangay">
+                                <option value="null">Choose Barangay</option>
+                            </select>    
+                        </div>
+
+                        
+                        
 
                         <div class="col-md-12 form-group p_star">
                             <input type="text" class="form-control" id="street" name="street" placeholder="Street Address">
@@ -100,6 +93,7 @@
                         </div>
 
                         <!--hidden orders-->
+                        
                        
                         
                     </form>

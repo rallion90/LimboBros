@@ -188,6 +188,7 @@ class AdminController extends Controller
         $order = new Order;
         $get_order = $order::where('order_number', '=', $id)->get();
         $get_info = $order::where('order_number', '=', $id)->limit(1)->first();
+        
         $sum = 0;
 
 

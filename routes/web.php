@@ -46,7 +46,8 @@ Route::prefix('customer')->group(function(){
 	//end Paypal Execution
 
 
-	Route::post('location', 'Customer\CustomerController@location')->name('location');
+	Route::get('municipality/{id}', 'Customer\CustomerController@municipality')->name('customer.municipality');
+	Route::get('barangay/{id}', 'Customer\CustomerController@barangay')->name('customer.barangay');
 
 });
 

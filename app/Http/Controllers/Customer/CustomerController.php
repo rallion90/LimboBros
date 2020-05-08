@@ -12,6 +12,8 @@ use Hash;
 
 use App\Municipality;
 
+use App\Barangay;
+
 use Illuminate\Http\Request;
 
 use Auth;
@@ -185,28 +187,20 @@ class CustomerController extends Controller
 
 
 
+    //address 
+    public function municipality($id){
+        $get_municipality = Municipality::where('provCode', '=', $id)->orderBy('citymunDesc')->pluck('citymunCode', 'citymunDesc');
 
 
 
+        return json_encode($get_municipality);
+    }
 
-    function location(Request $request){
-        /*$municipality = new Municipality;
-        $select = $request->get('select');
-        $value = $request->get('value');
-        $dependent = $request->get('dependent');
-        $data = $municipality::
-           where($select, $value)
-           ->groupBy($dependent)
-           ->get();
-        $output = '<option value="">Select '.ucfirst($dependent).'</option>';
-        foreach($data as $row)
-        {
-          $output .= '<option value="'.$row->$dependent.'">'.$row->$dependent.'</option>';
-        }
+    public function barangay($id){
+        $get_barangay = Barangay::where('citymunCode', '=', $id)->orderBy('brgyDesc', "ASC")->pluck('brgyCode', 'brgyDesc');
 
-        echo $output;*/
 
-        dd($request->all());
 
+        return json_encode($get_barangay);
     }
 }

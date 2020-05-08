@@ -11,6 +11,8 @@ use App\Order;
 
 use App\Province;
 
+use App\Municipality;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -29,16 +31,16 @@ class Helper{
 	}
 
 	public static function province(){
-		$province = new Province;
-		$get_province = $province::get();
+		
+		$get_province = Province::orderBy('provDesc', 'ASC')->get();
 
 		return $get_province;
 	}
 
-	public static function category(){
-		$category = new Category;
 
-		$get_category = $category::where('tag_deleted', '=', 0)->get();
+
+	public static function category(){
+		$get_category = Category::where('tag_deleted', '=', 0)->get();
 
 		return $get_category;
 	}

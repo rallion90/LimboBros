@@ -17,6 +17,18 @@ class Order extends Model
     	'product_name', 'product_price', 'product_quantity', 'customer', 'contact_number', 'zipcode', 'email', 'province', 'municipality', 'barangay', 'street', 'order_number', 'order_type', 'order_status', 'txn_number', 'receipt_number', 'payment_id', 'delivered_at'
     ];
 
+    public function prov(){
+    	return $this->belongsTo(Province::class,  'province');
+    }
+
+    public function mun(){
+    	return $this->belongsTo(Municipality::class, 'municipality');
+    }
+
+    public function bar(){
+    	return $this->belongsTo(Barangay::class, 'barangay');
+    }
+
     
 
     

@@ -47,8 +47,8 @@
 												<address>
 													<strong>Shipped To:</strong><br>
 													<b>{{ ucwords($get_info->customer) }}</b><br>
-													{{ ucwords($get_info->street) }}, {{ $get_info->barangay }}<br>
-													{{ $get_info->municipality }}, {{ $get_info->province }}, Philippines<br>
+													{{ ucwords($get_info->street) }}, {{ $get_info->bar->brgyDesc }}<br>
+													{{ $get_info->mun->citymunDesc }}, {{ $get_info->prov->provDesc }}, Philippines<br>
 												
 											</address>
 										</div>

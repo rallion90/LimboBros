@@ -10,15 +10,15 @@
     <link rel="icon" href="img/Fevicon.png" type="image/png">
   <link rel="stylesheet" href="{{ asset('customer_vendor/bootstrap/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('customer_vendor/fontawesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer_vendor/themify-icons/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer_vendor/linericon/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('customer_vendor/themify-icons/themify-icons.css') }}">
+  <link rel="stylesheet" href="{{ asset('customer_vendor/linericon/style.css') }}">
   <link rel="stylesheet" href="{{ asset('customer_vendor/nice-select/nice-select.css') }}">
   <link rel="stylesheet" href="{{ asset('customer_vendor/owl-carousel/owl.theme.default.min.css') }}">
   <link rel="stylesheet" href="{{ asset('customer_vendor/owl-carousel/owl.carousel.min.css') }}">
   <link rel="stylesheet" href="{{ asset('customer_vendor/nouislider/nouislider.min.css') }}">
 
 
-  <link rel="stylesheet" href="{{ asset('customer_vendor/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('customer_vendor/css/main.css') }}">
 
   <link rel="stylesheet" href="{{ asset('customer_vendor/css/status.css') }}">
 
@@ -169,19 +169,140 @@
 
   <script src="{{ asset('customer_vendor/jquery/jquery-3.2.1.min.js') }}"></script>
   <script src="{{ asset('customer_vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('customer_vendor/skrollr.min.js') }}"></script>
+  <!--<script src="{{ asset('customer_vendor/skrollr.min.js') }}"></script>-->
   <script src="{{ asset('customer_vendor/owl-carousel/owl.carousel.min.js') }}"></script>
   <script src="{{ asset('customer_vendor/nice-select/jquery.nice-select.min.js') }}"></script>
   <script src="{{ asset('customer_vendor/jquery.ajaxchimp.min.js') }}"></script>
   <script src="{{ asset('customer_vendor/mail-script.js') }}"></script>
   <script src="{{ asset('customer_vendor/js/main.js') }}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
   
 
 
 </body>
 </html>
+
+<script>
+  paypal.Button.render({
+    env: 'sandbox', // Or 'production'
+    style: {
+      size: 'medium'
+    },
+    // Set up the payment:
+    // 1. Add a payment callback
+
+    payment: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/customer/payment_create', 
+      {
+        _token: '{{csrf_token()}}',
+        first_name: $('#first').val(),
+        last_name: $('#last').val(),
+        email: $('#email').val(),
+        number: $('#number').val(),
+        zipcode: $('#zipcode').val(),
+        first_name: $('#first').val(),
+        province: $('#province').val(),
+        municipality: $('#municipality').val(),
+        barangay: $('#barangay').val(),
+        street: $('#street').val()
+      })
+        .then(function(res) {
+          // 3. Return res.id from the response
+
+          return res.id;
+        });
+    },
+    // Execute the payment:
+    // 1. Add an onAuthorize callback
+    onAuthorize: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/customer/payment_execute', {
+        _token: '{{csrf_token()}}',
+        paymentID: data.paymentID,
+        payerID:   data.payerID,
+        first_name: $('#first').val(),
+        last_name: $('#last').val(),
+        email: $('#email').val(),
+        province: $('#province').val(),
+        municipality: $('#municipality').val(),
+        barangay: $('#barangay').val(),
+        number: $('#number').val(),
+        zipcode: $('#zipcode').val(),
+        first_name: $('#first').val(),
+        
+        street: $('#street').val()
+      })
+        .then(function(res) {
+          window.location.href = "{{ route('customer.index') }}";
+        });
+    }
+  }, '#paypal-button');
+</script>
+
+<script>
+  $(document).ready(function(){
+    $('#municipality').on('change', function(){
+      var mun_id = $(this).val();
+
+      if(mun_id){
+        $.ajax({
+          url: '/customer/barangay/'+mun_id,
+          type: 'GET',
+          dataType: 'json',
+          success: function(data){
+            console.log(data);
+
+            $('#barangay').empty();
+
+            $.each(data, function(key, value){
+              $('#barangay').append('<option value="'+value+'">'+key+'</option>');
+            });
+
+            $('#barangay').niceSelect('update');
+          }
+        });
+      }else{
+
+        $('#barangay').empty();
+      }
+    });
+
+    $('#province').on('change', function(){
+      var prov_id = $(this).val();
+
+      if(prov_id){
+        $.ajax({
+          url: '/customer/municipality/'+prov_id,
+          type: 'GET',
+          dataType: 'json',
+          success: function(data){
+            console.log(data);
+
+            $('#municipality').empty();
+
+            $.each(data, function(key, value){
+              $('#municipality').append('<option value="'+value+'">'+key+'</option>');
+            });
+
+            $('#municipality').niceSelect('update');
+          }
+
+        });
+      }else{
+        $('#municipality').empty();
+        $('#barangay').empty();
+      }
+    });
+
+    
+
+  });
+</script>
+
+
 
 @if(Session::has('orderSuccess'))
   <script>
@@ -194,6 +315,7 @@
         // more options
     });
   </script>
+
 @elseif(Session::has('addSuccess')) 
   <script>
     swal("Item Added", "{!! Session::get('addSuccess') !!}", "success", {
@@ -258,77 +380,11 @@
     window.location.href='/customer/removeCart/'+id;
   }
 
-  function paypal(){
-    
-  } 
-
-  function cod(){
-
-  }
-
   
-
 </script>
 
 
 
-<!-- for payment-->
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-<script>
-
-  paypal.Button.render({
-    env: 'sandbox', // Or 'production'
-    style: {
-      size: 'medium'
-    },
-    // Set up the payment:
-    // 1. Add a payment callback
-
-    payment: function(data, actions) {
-      // 2. Make a request to your server
-      return actions.request.post('/customer/payment_create', 
-      {
-        _token: '{{csrf_token()}}',
-        first_name: $('#first').val(),
-        last_name: $('#last').val(),
-        email: $('#email').val(),
-        number: $('#number').val(),
-        zipcode: $('#zipcode').val(),
-        first_name: $('#first').val(),
-        province: $('#province').val(),
-        municipality: $('#municipality').val(),
-        barangay: $('#barangay').val(),
-        street: $('#street').val()
-      })
-        .then(function(res) {
-          // 3. Return res.id from the response
-
-          return res.id;
-        });
-    },
-    // Execute the payment:
-    // 1. Add an onAuthorize callback
-    onAuthorize: function(data, actions) {
-      // 2. Make a request to your server
-      return actions.request.post('/customer/payment_execute', {
-        _token: '{{csrf_token()}}',
-        paymentID: data.paymentID,
-        payerID:   data.payerID,
-        first_name: $('#first').val(),
-        last_name: $('#last').val(),
-        email: $('#email').val(),
-        number: $('#number').val(),
-        zipcode: $('#zipcode').val(),
-        first_name: $('#first').val(),
-        
-        street: $('#street').val()
-      })
-        .then(function(res) {
-          window.location.href = "{{ route('customer.index') }}";
-        });
-    }
-  }, '#paypal-button');
-</script>
 
 
 
