@@ -189,7 +189,7 @@ class CustomerController extends Controller
 
     //address 
     public function municipality($id){
-        $get_municipality = Municipality::where('provCode', '=', $id)->orderBy('citymunDesc')->pluck('citymunCode', 'citymunDesc');
+        $get_municipality = Municipality::where('provCode', '=', $id)->orderBy('citymunDesc', "ASC")->pluck('citymunCode', 'citymunDesc');
 
 
 

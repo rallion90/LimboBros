@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Municipality extends Model
+class MunicipalityAdmin extends Model
 {
     //
-    //protected $primaryKey = 'citymunCode';
+    protected $primaryKey = 'citymunCode';
 
     protected $table = "refcitymun";
 

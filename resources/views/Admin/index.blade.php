@@ -138,7 +138,7 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     
-                                        <div id="chartContainer" style="height: 300px; width: 100%;">
+                                        <div id="container" style="height: 400px; width: 100%;">
                                            
                                         </div>
                                     

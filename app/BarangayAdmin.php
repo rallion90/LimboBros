@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barangay extends Model
+class BarangayAdmin extends Model
 {
     //
-    //protected $primaryKey = 'brgyCode';
+    protected $primaryKey = 'brgyCode';
 
     protected $table = "refbrgy";
 
@@ -15,5 +15,3 @@ class Barangay extends Model
 
     protected $fillable = ['brgyCode', 'brgyDesc', 'regCode', 'provCode', 'citymunCode'];
 }
-
-

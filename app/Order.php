@@ -18,15 +18,15 @@ class Order extends Model
     ];
 
     public function prov(){
-    	return $this->belongsTo(Province::class,  'province');
+    	return $this->belongsTo(ProvinceAdmin::class,  'province');
     }
 
     public function mun(){
-    	return $this->belongsTo(Municipality::class, 'municipality');
+    	return $this->belongsTo(MunicipalityAdmin::class, 'municipality');
     }
 
     public function bar(){
-    	return $this->belongsTo(Barangay::class, 'barangay');
+    	return $this->belongsTo(BarangayAdmin::class, 'barangay');
     }
 
     

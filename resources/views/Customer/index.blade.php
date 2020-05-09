@@ -41,13 +41,13 @@
                             <img class="card-img" src="{{ asset('image') }}/{{ $product->product_image }}" alt="">
                         @if(Auth::guard('customer')->check())    
                             <ul class="card-product__imgOverlay">
-                                <li><a href="#"><i class="ti-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="ti-heart"></i></a></li>
+                                
+                                <li><a href="/customer/product_details/{{ $product->product_id }}"><i class="ti-eye"></i></a></li>
                             </ul>
                         @else
                             <ul class="card-product__imgOverlay">
-                                <li><a href="{{ route('customer.login') }}"><i class="ti-shopping-cart"></i></a></li>
-                                <li><a href="{{ route('customer.login') }}"><i class="ti-heart"></i></a></li>
+                                
+                                <li><a href="{{ route('customer.login') }}"><i class="ti-eye"></i></a></li>
                             </ul> 
                         @endif    
                         </div>
