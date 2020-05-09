@@ -37,7 +37,7 @@
 								<tr>
 									<td style="vertical-align: middle;">{{ ucwords($cod->order_number) }}</td>
 									
-									<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="#"><i class="fa fa-print"></i></a> &nbsp; <a href="/admin/order_details/{{ $cod->order_number }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+									<td style="vertical-align: middle;"><a href="#"><i class="fa fa-truck"></i></a> &nbsp; <a href="/admin/generateReceipt/{{ $cod->order_number }}"><i class="fa fa-print"></i></a> &nbsp; <a href="/admin/order_details/{{ $cod->order_number }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
 								</tr>
 							@endforeach	
 							</tbody>

@@ -22,6 +22,16 @@ use App\Mail\OrderMail;
 
 use Carbon;
 
+use LaravelDaily\Invoices\Invoice;
+
+use LaravelDaily\Invoices\Classes\Buyer;
+
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+
+use LaravelDaily\Invoices\Classes\Party;
+
+
+
 class AdminController extends Controller
 {
     //
@@ -52,7 +62,7 @@ class AdminController extends Controller
                  ->where('tag_deleted', '=', 0)
                  ->where('order_status', '=', 0)
                  ->groupBy('order_number')
-                 ->orderBy('created_at')
+                 ->orderBy('created_at', 'DESC')
                  ->get();
 
         $get_deliver = DB::table('orders')
@@ -179,7 +189,7 @@ class AdminController extends Controller
 
     public function succesful(){
         
-        $order_success = FinishOrder::where('tag_deleted', '=', 0)->get();        
+        $order_success = FinishOrder::where('tag_deleted', '=', 0)->orderBy('delivered_at', 'DESC')->get();        
 
         return view('Admin.successful_order')->with('succesful_deliver', $order_success);
     }
@@ -277,6 +287,32 @@ class AdminController extends Controller
 
     }
 
+    public function adminorderRecieved($id){
+    
+        Order::where('order_number', '=', $id)->update([
+            'order_status' => 2,
+            'tag_deleted' => 1,
+        ]);
+
+        $orders = Order::where('order_number', '=', $id)->get();
+
+        $total = 0;
+        foreach($orders as $order){
+            $total += ($order->product_quantity * $order->product_price);
+        }
+
+        $order_data = array(
+            'order_number' => $id,
+            'total' => $total,
+            'delivered_at' => Carbon::now()->toDateTimeString(),
+        );
+
+        FinishOrder::insert($order_data);
+
+        return redirect()->route('admin.paypal');
+
+    }
+
     public function paypalConfirm($id){
         $order = new Order;
         $update = $order::where('order_number', '=', $id)->update([
@@ -308,6 +344,54 @@ class AdminController extends Controller
             
             return redirect()->route('admin.cod')->with('success', 'Order Succesfully Confirmed');
         }    
+    }
+
+    public function generateReceipt($id){
+        $information = Order::where('order_number', '=', $id)->groupBy('order_id')->first();
+
+        $get_item = Order::where('order_number', '=', $id)->get();
+
+
+        $customer = new Party([
+            'name'          => 'Puke',
+            'address'       => $information->street.', '.$information->barangay.' '.$information->municipality.', '.$information->province.', Philippines',
+            'code'          => $information->zipcode,
+            'custom_fields' => [
+                'order number' => $information->order_number,
+            ],
+        ]);
+
+        $items = [];
+        foreach($get_item as $item){
+            $items[] = (new InvoiceItem())->title($item->product_name)->pricePerUnit($item->product_price)->quantity($item->product_quantity);
+        }
+
+        
+
+        $invoice = Invoice::make('receipt')
+            ->series('BIG')
+            ->sequence(667)
+            ->serialNumberFormat('{SEQUENCE}/{SERIES}')
+            ->buyer($customer)
+            ->date(now()->subWeeks(3))
+            ->dateFormat('m/d/Y')
+            ->payUntilDays(14)
+            ->currencySymbol('₱')
+            ->currencyCode('PHP')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->filename($customer->name)
+            ->addItems($items)
+            ->logo(public_path('vendor/invoices/sample-logo.png'))
+            // You can additionally save generated invoice to configured disk
+            ->save('public');
+
+        $link = $invoice->url();
+
+        return $invoice->stream();
+
+
     }
 
     

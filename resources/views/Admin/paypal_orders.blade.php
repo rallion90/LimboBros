@@ -64,7 +64,7 @@
 								<tr>
 									<td style="vertical-align: middle;">{{ $deliver->order_number}}</td>
 									
-									<td style="vertical-align: middle;"><a href="#">Success</a></td>
+									<td style="vertical-align: middle;"><a href="/admin/order_success/{{ $deliver->order_number }}">Success</a></td>
 								</tr>
 							@endforeach	
 							</tbody>

@@ -75,6 +75,9 @@ Route::prefix('admin')->group(function(){
 		Route::get('order_recieved/{id}', 'Admin\AdminController@orderRecieved');
 		Route::get('paypal', 'Admin\AdminController@paypalOrders')->name('admin.paypal');
 		Route::get('paypal/{id}', 'Admin\AdminController@paypalConfirm')->name('paypal');
+		Route::get('analytics', 'Analytics@YearlySales')->name('admin.analytics');
+		Route::get('order_success/{id}', 'Admin\AdminController@adminorderRecieved');
+		Route::get('generateReceipt/{id}', 'Admin\AdminController@generateReceipt');
 
 	});	
 });

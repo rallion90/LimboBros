@@ -203,4 +203,6 @@ class CustomerController extends Controller
 
         return json_encode($get_barangay);
     }
+
+
 }

@@ -138,9 +138,7 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     
-                                        <div id="container" style="height: 400px; width: 100%;">
-                                           
-                                        </div>
+                                        <div id="container" style="height: 300px; width: 100%;"></div>
                                     
                                 </div>
                                 <!-- /.panel-body -->

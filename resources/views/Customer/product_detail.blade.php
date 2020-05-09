@@ -46,13 +46,10 @@
 							
 							<input type="number" name="product_quantity" id="product_quantity" size="2" min="1" maxlength="12" value="1" title="Quantity:" class="input-text qty">
 							
-							<button class="btn btn-primary" id="addCart">Add to Cart</button>
+							<button class="btn btn-success" id="addCart">Add to Cart</button>
 						</div>
 					</form>
-					<div class="card_area d-flex align-items-center">
-						<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-						<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-					</div>
+					
 				</div>
 			</div>
 		</div>

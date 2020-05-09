@@ -176,6 +176,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        //onsoleTVs\Charts\ChartsServiceProvider::class,
+        LaravelDaily\Invoices\InvoiceServiceProvider::class,
 
     ],
 
@@ -232,6 +234,7 @@ return [
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
         'Carbon' => 'Carbon\Carbon',
+        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
     ],
 
 ];
